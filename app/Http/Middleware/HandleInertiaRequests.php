@@ -4,6 +4,9 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -37,7 +40,19 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            //
+            'site_name' => config('app.name'),
+
+            'turnstile' => [
+                'site_key' => config('services.turnstile.site_key'),
+            ],
+
+            'auth.admin' => fn() => Auth::guard('admin')->user()?->only('id','username','email','image'),
+
+            'session' => function () {
+                return [
+                    'notify'    => Session::get('notify'),
+                ];
+            },
         ];
     }
 }
