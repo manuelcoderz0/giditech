@@ -1,6 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
 
+function key_to_title($text)
+{
+    return ucfirst(preg_replace("/[^A-Za-z0-9 ]/", ' ', $text));
+}
 
 function verify_captcha(): bool {
 

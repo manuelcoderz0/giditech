@@ -5,6 +5,7 @@ use App\Http\Middleware\RedirectIfNotAdmin;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Symfony\Component\HttpFoundation\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -33,5 +34,23 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->shouldRenderJsonWhen(function () {
+            if (request()->is('api/*')) {
+                return true;
+            }
+        });
+        $exceptions->respond(function (Response $response) {
+            if ($response->getStatusCode() === 401) {
+                if (request()->is('api/*')) {
+                    $notify[] = 'Unauthorized request';
+                    return response()->json([
+                        'remark' => 'unauthenticated',
+                        'status' => 'error',
+                        'message' => ['error' => $notify]
+                    ]);
+                }
+            }
+
+            return $response;
+        });
     })->create();

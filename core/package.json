@@ -8,6 +8,7 @@
     },
     "devDependencies": {
         "@sveltejs/vite-plugin-svelte": "^6.2.4",
+        "@tailwindcss/forms": "^0.5.11",
         "@tailwindcss/vite": "^4.0.0",
         "axios": "^1.11.0",
         "concurrently": "^9.0.1",
@@ -18,7 +19,11 @@
     },
     "dependencies": {
         "@inertiajs/svelte": "^2.3.11",
+        "@tinymce/tinymce-svelte": "^3.2.0",
         "izitoast": "^1.4.0",
+        "jquery": "^4.0.0",
+        "preline": "^3.2.3",
+        "slim-select": "^3.3.0",
         "svelte-turnstile": "^0.11.0"
     }
 }

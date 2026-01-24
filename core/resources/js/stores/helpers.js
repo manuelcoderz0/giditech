@@ -1,4 +1,4 @@
-
+import { FileInfo } from './fileinfo.js';
 
 
 export function active(node, routeName) {
@@ -31,6 +31,20 @@ export function active(node, routeName) {
     };
 }
 
+export function append_query(url, key, value) {
+    const newUrl = new URL(url, window.location.origin);
+    newUrl.searchParams.set(key, value);
+    return newUrl.toString();
+}
+
+export function get_file_size(key) {
+    return FileInfo[key]?.size || null;
+}
+
+export function get_file_path(key) {
+    return FileInfo[key]?.path || '';
+}
+
 export function get_image(image, key = null) {
     // If no image provided → fallback
     if (!image) {
@@ -51,9 +65,15 @@ export function get_image(image, key = null) {
     return `/${image.replace(/^\/+/, '')}`;
 }
 
+export function search_url(currentUrl) {
+    const url = new URL(currentUrl, window.location.origin);
+    url.searchParams.delete('page'); // Remove page parameter when searching
+    return url.pathname + url.search;
+}
+
 export function site_logo(type = null) {
-    const name = type ? `/logo_${type}.svg` : '/logo.svg';
-    return get_image(getFilePath('logoIcon') + name);
+    const name = type ? `/logo_${type}.svg` : '/logo.png';
+    return get_image(get_file_path('logoIcon') + name);
 }
 
 export function site_favicon() {
