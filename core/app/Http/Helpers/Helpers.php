@@ -1,10 +1,44 @@
 <?php
 
+use App\Lib\FileManager;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+
+function file_manager()
+{
+    return new FileManager();
+}
+
+function file_uploader($file, $location, $size = null, $old = null, $thumb = null, $filename = null)
+{
+    $fileManager = new FileManager($file);
+    $fileManager->path = $location;
+    $fileManager->size = $size;
+    $fileManager->old = $old;
+    $fileManager->thumb = $thumb;
+    $fileManager->filename = $filename;
+    $fileManager->upload();
+    return $fileManager->filename;
+}
+
+function get_file_path($key)
+{
+    return file_manager()->$key()->path;
+}
+
+function get_file_size($key)
+{
+    return file_manager()->$key()->size;
+}
 
 function key_to_title($text)
 {
     return ucfirst(preg_replace("/[^A-Za-z0-9 ]/", ' ', $text));
+}
+
+function slug($string)
+{
+    return Str::slug($string);
 }
 
 function verify_captcha(): bool {

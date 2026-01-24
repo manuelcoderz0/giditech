@@ -1,5 +1,7 @@
 import './bootstrap';
 import '../css/app.css';
+import '@tailwindplus/elements'
+import 'preline'
 
 import { createInertiaApp } from '@inertiajs/svelte'
 import { mount } from 'svelte'
@@ -12,4 +14,5 @@ createInertiaApp({
     setup({ el, App, props }) {
         mount(App, { target: el, props })
     },
+    progress: { color: '#4855DC' },
 })

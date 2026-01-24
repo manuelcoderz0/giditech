@@ -21,6 +21,7 @@
         description:  '',
         trending: '',
         must_read: '',
+        status: '',
     })
 
     let conf = {
@@ -154,9 +155,9 @@
                     </div>
 
                     <div class="">
-                        <label for="trending" class="block mb-2 text-sm font-medium text-gray-800">Trending</label>
+                        <label for="status" class="block mb-2 text-sm font-medium text-gray-800">Publish</label>
                         <label class="block cursor-pointer w-full">
-                            <input id="trending" bind:checked={$form.trending} type="checkbox" class="peer hidden"/>
+                            <input id="status" bind:checked={$form.status} type="checkbox" class="peer hidden"/>
                             <div class="px-4 py-2 text-sm text-center rounded-lg transition bg-red-600 text-white peer-checked:bg-green-600 peer-checked:[&_.enable]:hidden peer-checked:[&_.disable]:inline">
                                 <span class="enable">No</span>
                                 <span class="disable hidden">Yes</span>

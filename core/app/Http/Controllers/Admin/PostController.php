@@ -6,7 +6,9 @@ use App\Constants\Status;
 use App\Models\Post;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
+use App\Rules\FileTypeValidate;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -42,6 +44,54 @@ class PostController extends Controller
         $tinymce_api_key = config('services.tinymce.api_key');
         view()->share(compact('page_title'));
         return Inertia::render('admin/posts/form', compact('page_title', 'categories', 'tinymce_api_key'));
+    }
+
+    public function store(Request $request, $id = 0)
+    {
+        //dd($request->all());
+        $request->validate([
+            'category_id'       => 'required|integer|exists:categories,id',
+            'title'             => 'required|string',
+            'short_description' => 'required',
+            'description'       => 'required',
+            'video_link'        => 'required_if:have_video,==,on|url',
+            'tags'              => 'required|max:60000|array',
+            'image'             => [$id ? 'nullable' : 'required', 'image', new FileTypeValidate(['jpg', 'jpeg', 'png'])]
+        ]);
+
+        if ($id) {
+            $post = Post::findOrFail($id);
+            $message = 'Post updated successfully';
+        } else {
+            $post = new Post();
+            $message = 'Post created successfully';
+        }
+
+        if ($request->has('image')) {
+            @$old = $post->image;
+            try {
+                $post->image =  file_uploader($request->image, get_file_path('posts'), get_file_size('posts'), @$old);
+            } catch (\Exception $exp) {
+                throw ValidationException::withMessages(['error' => 'Couldn\'t upload your image']);
+            }
+        }
+
+        $purifier                = new \HTMLPurifier();
+        $post->category_id       = $request->category_id;
+        $post->title             = $request->title;
+        $post->slug              = slug($request->title);
+        $post->short_description = $request->short_description;
+        $post->description       = htmlspecialchars_decode($purifier->purify($request->description));
+        $post->tags              = $request->tags;
+        $post->have_video        = $request->have_video == 'on' ? Status::YES : Status::NO;
+        $post->video_link        = $request->have_video == 'on' ? $request->video_link : null;
+        $post->trending          = $request->trending == 'on' ? Status::YES : Status::NO;
+        $post->must_read         = $request->must_read == 'on' ? Status::YES : Status::NO;
+        $post->status            = $request->status == 'on' ? Status::YES : Status::NO;
+        $post->save();
+
+        $notify[] = ['success', $message];
+        return back()->withNotify($notify);
     }
 
     public function status($id)
