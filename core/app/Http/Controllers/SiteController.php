@@ -37,6 +37,29 @@ class SiteController extends Controller
 
     }
 
+    public function post_details($slug)
+    {
+        
+        $post = $this->post_query()->where('slug', $slug)->firstOrFail();
+        $post->increment('views');
+
+        $page_title   = $post->title;
+        $column       = ['id', 'title', 'image', 'slug', 'created_at'];
+        $topNews      = $this->post_query()->where('id', '<>', $post->id)->orderByDesc('views')->take(6)->get($column);
+        $trendingNews = $this->post_query('trending', 'desc')->where('id', '<>', $post->id)->take(4)->get($column);
+        $latest_news  = $this->post_query(orderBy: 'desc')->where('id', '<>', $post->id)->take(6)->get($column);
+
+        $seo_contents['keywords']           = $post->tags ?? [];
+        $seo_contents['social_title']       = $post->title;
+        $seo_contents['description']        = str_limit(strip_tags($post->short_description), 150);
+        $seo_contents['social_description'] = str_limit(strip_tags($post->short_description), 150);
+        $seo_image                          = get_image(get_file_path('news') . '/' . @$post->image, get_file_size('news'));
+        $seo_contents                       = json_decode(json_encode($seo_contents));
+
+        view()->share(compact('page_title', 'seo_contents', 'seo_image'));
+        return Inertia::render('post/details', compact('page_title', 'post', 'topNews', 'trendingNews', 'latest_news'));
+    }
+
     public function placeholder_image($size = null)
     {
         $imgWidth  = explode('x', $size)[0];

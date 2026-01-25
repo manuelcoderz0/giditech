@@ -7,7 +7,7 @@
 
 
 <svelte:component this={layout}>
-    <div class="">
+    <div class="bg-white dark:bg-[#151516]">
         <svelte:component this={header}></svelte:component>
 
             <slot />

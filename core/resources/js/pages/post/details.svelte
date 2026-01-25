@@ -3,8 +3,25 @@
     import { inertia, page } from '@inertiajs/svelte';
 
     $: page_title = $page.props.page_title;
-    $: category_news = $page.props.category_news;
+    $: post = $page.props.post;
 </script>
+
+<style>
+    :global(.post-content a) {
+        color: #900068;
+        text-decoration: underline;
+    }
+    :global(.post-content a:hover) {
+        opacity: 0.8;
+    }
+    :global(.post-content blockquote) {
+        border-left: 4px solid #900068;
+        padding-left: 16px;
+        margin-left: 0;
+        font-style: italic;
+        color: #FFFFFFA6;
+    }
+</style>
 
 <svelte:head>
     <title>{ page_title }</title>
@@ -15,14 +32,14 @@
         <nav class="w-full mx-auto max-w-340 relative px-6 sm:px-6 md:px-8 lg:px-20">
             <ol class="flex items-center whitespace-nowrap py-5">
                 <li class="inline-flex items-center">
-                    <a href="{ route('home') }" use:inertia={{ prefetch: true }} class="flex items-center text-[12px] text-[#999] hover:text-[#777] focus:outline-hidden">
+                    <a href="{ route('home') }" use:inertia={{ prefetch: true }} class="flex items-center text-[12px] text-[#777] hover:text-[#777] focus:outline-hidden">
                         Home
                     </a>
-                    <svg class="shrink-0 mx-2 size-3 text-[#999] dark:text-neutral-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="shrink-0 mx-1 size-3 text-[#999] dark:text-neutral-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m9 18 6-6-6-6"></path>
                     </svg>
                 </li>
-                <li class="inline-flex items-center text-[12px] font-semibold text-[#777] truncate dark:text-[#777]" aria-current="page">
+                <li class="inline-flex items-center text-[12px] font-semibold text-[#999] truncate dark:text-[#777]" aria-current="page">
                     { page_title }
                 </li>
             </ol>
@@ -30,38 +47,35 @@
 
         <div class="md:flex mx-auto max-w-340 px-6 sm:px-6 md:px-8 lg:px-20 gap-8 mt-2">
             
-
-
             <div class="md:flex-1">
-                <h1 class="text-[19px] font-semibold uppercase pl-3.5 mb-10 text-black dark:text-white border-l-3 border-[#900068]">Browsing: <span class="font-bold">{ page_title }</span></h1>
-                <div class="mb-10 -mt-4.5">
-                    <p class="text-[15px] text-[#505050] dark:text-[#ccc]">Every click, every login, every app are all a potential entry point. This category keeps you one step ahead with real-world cybersecurity tips, breakdowns of major threats, and stories behind digital defense. No fear tactics.  Just clarity, context, and the knowledge to protect what matters.</p>
+                <div>
+                    <span class="-mb-5">
+                        <a href="" class="bg-[#900068] px-2 py-1 text-white text-[11px] uppercase font-semibold inline-flex mb-1.5">Cybersecurity</a>
+                    </span>
                 </div>
-                <div class="grid sm:grid-cols-2 gap-8">
-                    {#each category_news as news}
-                        <article>
-                            <div class="mb-4 relative ">
-                                <a href="{ route('post.details', news.slug) }" class="block overflow-hidden">
-                                    <img src="https://giditech.net/wp-content/uploads/2025/10/Image_fx-41-450x245.png" alt="Article Image" class="w-full h-auto transform hover:scale-105 transition-transform duration-300 ease-in-out">
-                                </a>    
-                                <span class="top-auto absolute bg-[#900068] bottom-0 z-1 max-w-[calc(100%-14px)]">
-                                    <a href="" class="inline-flex  px-2 text-white rounded uppercase text-[11px]">Cybersecurity</a>
-                                </span> 
-                            </div>
-                            <div class="relative">
-                                <div class="flex flex-col ">
-                                    <h2 class="text-[20px] font-bold text-[#161616] dark:text-white hover:text-[#900068] leading-[1.36] mb-2"><a href="">Password Tricks Hackers Hate: How to Build Unbreakable Logins</a></h2>
-                                    <div>
-                                        <span class="text-[#8a8a8a] text-[12px] mr-1">By <a href="" class="text-[#191919] dark:text-[#ececec]">Freda Amodun</a></span>
-                                        <span class="text-[#8a8a8a] text-[12px] mr-4.5">-   October 7, 2025</span>
-                                    </div>
-                                </div>
-                                <div class="mt-4 ">
-                                    <p class="text-[#505050] dark:text-[#ccc] text-[15px]">Did you know it takes a hacker about eight seconds or less to crack an average password? Think about that…</p>
-                                </div>
-                            </div>
-                        </article>
-                    {/each}
+                <h1 class="text-[35px] font-bold my-4 text-black dark:text-white">{ page_title }</h1>
+
+                <div class="flex items-center gap-3">
+                    <span class="flex items-center gap-2 text-xs text-[#8a8a8a] dark:text-[#FFFFFFA6]">
+                        <img src="https://giditech.net/wp-content/uploads/2024/08/IMG_0623-48x48.jpg" class="size-8 rounded-full mr-1" alt="">
+                        By <a href="" class="text-[#191919] dark:text-white font-semibold ms-2 hover:underline -ml-1">Freda Amodun</a>
+                    </span>
+                    <span class="text-xs text-[#8a8a8a] dark:text-[#FFFFFFA6]">-  October 10, 2022</span>
+                </div>
+
+                <div class="mb-8 mt-4">
+                    <img src="https://giditech.net/wp-content/uploads/2025/10/Image_fx-41-1024x559.png" alt="Article Image" class="w-full h-auto mt-6 mb-8 rounded-lg">
+                </div>
+
+                <div class="">
+                    <article class="mb-12 text-[#161616] dark:text-[#ececec] post-content text-">
+                        {@html post.description }
+                    </article>
+                </div>
+
+                <div class="flex items-center mt-9">
+                    <a href="" class="inline mr-2.5 mb-1.5 px-2.5 bg-[#f7f7f7] text-[#999] text-[13px] leading-7 rounded">cybersecurity</a>
+                    <a href="" class="inline mr-2.5 mb-1.5 px-2.5 bg-[#f7f7f7] text-[#999] text-[13px] leading-7 rounded">cybersecurity</a>
                 </div>
             </div>
 

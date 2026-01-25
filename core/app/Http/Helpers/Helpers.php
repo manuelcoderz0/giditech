@@ -53,6 +53,11 @@ function slug($string)
     return Str::slug($string);
 }
 
+function str_limit($title = null, $length = 10)
+{
+    return Str::limit($title, $length);
+}
+
 function verify_captcha(): bool {
 
     $token  = request()->input('captcha');

@@ -191,7 +191,7 @@
 
                 <div class="col-span-12 md:col-span-4 mb-12">
                     <div class="bg-black border-4 border-[#111] ">
-                        <div class="p-8 max-w-175 text-center mx-auto">
+                        <div class="px-8 py-6 max-w-175 text-center mx-auto">
                             <h3 class="text-[24px] text-[#ececec] font-bold mb-4.5 mt-2">Subscribe to Updates</h3>
                             <p class="mb-5.5 text-[#FFFFFFCC] text-sm">Subscribe to our newsletter for the latest updates, in-depth guides, and expert insights delivered straight to your inbox.</p>
                             <form action="" class="max-w-162.5 mx-auto">
@@ -201,7 +201,7 @@
                                 </div>
                                 <div class="flex justify-center mt-5">
                                     <input type="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-default-checkbox">
-                                    <label for="hs-default-checkbox" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">By signing up, you agree to the our terms and our Privacy Policy agreement.</label>
+                                    <label for="hs-default-checkbox" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">By signing up, you agree to the our terms and policy.</label>
                                 </div>
                             </form>
                         </div>
