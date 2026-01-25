@@ -14,8 +14,8 @@ class Category extends Model
         'seo_content' => 'object'
     ];
 
-    public function news()
+    public function posts()
     {
-        return $this->hasMany(News::class)->active()->approved();
+        return $this->hasMany(Post::class)->active()->approved();
     }
 }

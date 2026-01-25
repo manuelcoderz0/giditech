@@ -25,5 +25,7 @@ class Status{
     const USER_ACTIVE = 1;
     const USER_BAN = 0;
 
-
+    const POST_PENDING  = 0;
+    const POST_APPROVED = 1;
+    const POST_REJECTED = 2;
 }

@@ -1,0 +1,171 @@
+<script>
+    import layout  from '@/js/pages/layouts/app.svelte';
+    import { inertia, page } from '@inertiajs/svelte';
+
+    $: page_title = $page.props.page_title;
+</script>
+
+<svelte:head>
+    <title>{ page_title }</title>
+</svelte:head>
+
+<svelte:component this={layout}>
+    <section class="bg-white dark:bg-[#151516]">
+        <nav class="w-full mx-auto max-w-340 relative px-6 sm:px-6 md:px-8 lg:px-20">
+            <ol class="flex items-center whitespace-nowrap py-5">
+                <li class="inline-flex items-center">
+                    <a class="flex items-center text-[12px] text-[#999] hover:text-[#777] focus:outline-hidden" href="#">
+                        Home
+                    </a>
+                    <svg class="shrink-0 mx-2 size-3 text-[#999] dark:text-neutral-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m9 18 6-6-6-6"></path>
+                    </svg>
+                </li>
+                <li class="inline-flex items-center text-[12px] font-semibold text-[#777] truncate dark:text-[#777]" aria-current="page">
+                    Application
+                </li>
+            </ol>
+        </nav>
+
+        <div class="md:flex mx-auto max-w-340 px-6 sm:px-6 md:px-8 lg:px-20 gap-8 mt-2">
+            
+
+
+            <div class="md:flex-1">
+                <h1 class="text-[19px] font-semibold uppercase pl-3.5 mb-10 text-black dark:text-white border-l-3 border-[#900068]">Browsing: <span class="font-bold">Cybersecurity</span></h1>
+                <div class="mb-10 -mt-4.5">
+                    <p class="text-[15px] text-[#505050] dark:text-[#ccc]">Every click, every login, every app are all a potential entry point. This category keeps you one step ahead with real-world cybersecurity tips, breakdowns of major threats, and stories behind digital defense. No fear tactics.  Just clarity, context, and the knowledge to protect what matters.</p>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-8">
+                    <article>
+                        <div class="mb-4 relative ">
+                            <a href="#" class="block overflow-hidden">
+                                <img src="https://giditech.net/wp-content/uploads/2025/10/Image_fx-41-450x245.png" alt="Article Image" class="w-full h-auto transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                            </a>    
+                            <span class="top-auto absolute bg-[#900068] bottom-0 z-1 max-w-[calc(100%-14px)]">
+                                <a href="" class="inline-flex  px-2 text-white rounded uppercase text-[11px]">Cybersecurity</a>
+                            </span> 
+                        </div>
+                        <div class="relative">
+                            <div class="flex flex-col ">
+                                <h2 class="text-[20px] font-bold text-[#161616] dark:text-white hover:text-[#900068] leading-[1.36] mb-2"><a href="">Password Tricks Hackers Hate: How to Build Unbreakable Logins</a></h2>
+                                <div>
+                                    <span class="text-[#8a8a8a] text-[12px] mr-1">By <a href="" class="text-[#191919] dark:text-[#ececec]">Freda Amodun</a></span>
+                                    <span class="text-[#8a8a8a] text-[12px] mr-4.5">-   October 7, 2025</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 ">
+                                <p class="text-[#505050] dark:text-[#ccc] text-[15px]">Did you know it takes a hacker about eight seconds or less to crack an average password? Think about that…</p>
+                            </div>
+                        </div>
+                    </article>
+
+                
+                </div>
+            </div>
+
+            <div class="md:block w-full md:w-75 rounded-lg sticky top-6.25 md:top-0 mt-6.25 md:mt-0 self-start h-max">
+                <div>
+                    <div class="bg-black py-2.25 px-3.5 mb-6.5">
+                        <h5 class="text-[13px] text-white uppercase font-medium">Top Posts</h5>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <article class="flex">
+                            <div class="w-27.5 h-19 max-w-[40%] mr-4.5 shrink-0">
+                                <a href="">
+                                    <img src="https://giditech.net/wp-content/uploads/2025/07/Whisk_1735ead336-1024x559.jpg" alt="Thumbnail" class="w-full h-full object-cover">
+                                </a>
+                            </div>
+                            <div class="flex flex-col">
+                                <h4 class="text-[14px] font-semibold"><a href="" class="hover:text-[#900068] dark:text-white">Beyond Connecting Wallets: What Web3 Was Meant to Be</a></h4>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-[#8a8a8a] text-xs mr-3">July 2, 2025</span>
+                                    <span class="text-[#8a8a8a] text-xs flex items-center gap-1">
+                                        <svg class="stroke-current size-4 stroke-1 fill-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M4 9V20" />
+                                            <path d="M8 4V20" />
+                                            <path d="M12 11V20" />
+                                            <path d="M16 7V20" />
+                                            <path d="M20 14V20" />
+                                        </svg>
+                                        344 views
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="flex">
+                            <div class="w-27.5 h-19 max-w-[40%] mr-4.5 shrink-0">
+                                <a href="">
+                                    <img src="https://giditech.net/wp-content/uploads/2025/07/Whisk_1735ead336-1024x559.jpg" alt="Thumbnail" class="w-full h-full object-cover">
+                                </a>
+                            </div>
+                            <div class="flex flex-col">
+                                <h4 class="text-[14px] font-semibold"><a href="" class="hover:text-[#900068] dark:text-white">Beyond Connecting Wallets: What Web3 Was</a></h4>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-[#8a8a8a] text-xs mr-3">July 2, 2025</span>
+                                    <span class="text-[#8a8a8a] text-xs flex items-center gap-1">
+                                        <svg class="stroke-current size-4 stroke-1 fill-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M4 9V20" />
+                                            <path d="M8 4V20" />
+                                            <path d="M12 11V20" />
+                                            <path d="M16 7V20" />
+                                            <path d="M20 14V20" />
+                                        </svg>
+                                        344 views
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="flex">
+                            <div class="w-27.5 h-19 max-w-[40%] mr-4.5 shrink-0">
+                                <a href="">
+                                    <img src="https://giditech.net/wp-content/uploads/2025/07/Whisk_1735ead336-1024x559.jpg" alt="Thumbnail" class="w-full h-full object-cover">
+                                </a>
+                            </div>
+                            <div class="flex flex-col">
+                                <h4 class="text-[14px] font-semibold"><a href="" class="hover:text-[#900068] dark:text-white">Beyond Connecting Wallets: What Web3 Was</a></h4>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-[#8a8a8a] text-xs mr-3">July 2, 2025</span>
+                                    <span class="text-[#8a8a8a] text-xs flex items-center gap-1">
+                                        <svg class="stroke-current size-4 stroke-1 fill-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M4 9V20" />
+                                            <path d="M8 4V20" />
+                                            <path d="M12 11V20" />
+                                            <path d="M16 7V20" />
+                                            <path d="M20 14V20" />
+                                        </svg>
+                                        344 views
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+               
+                <div class="mt-10">
+                    <div class="bg-black py-2.25 px-3.5 mb-6.5">
+                        <h5 class="text-[13px] text-white uppercase font-medium">Stay In Touch</h5>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                       <a href="" target="_blank" class="w-full border text-[13px] font-semibold border-gray-200 text-[#333] min-h-12 flex items-center px-3.5 py-1.5">
+                            <svg class="size-4.5 stroke-2 stroke-[#fe2c55] fill-none mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke-linejoin="round">
+                                <path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z" />
+                                <path d="M10.5359 11.0075C9.71585 10.8916 7.84666 11.0834 6.93011 12.7782C6.01355 14.4729 6.9373 16.2368 7.51374 16.9069C8.08298 17.5338 9.89226 18.721 11.8114 17.5619C12.2871 17.2746 12.8797 17.0603 13.552 14.8153L13.4738 5.98145C13.3441 6.95419 14.4186 9.23575 17.478 9.5057" />
+                            </svg>
+                            TikTok
+                       </a>
+                       <a href="" target="_blank" class="w-full border text-[13px] font-semibold border-gray-200 text-[#333] min-h-12 flex items-center px-3.5 py-1.5">
+                            <svg class="size-4.5 stroke-2 stroke-[#fe2c55] fill-none mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke-linejoin="round">
+                                <path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z" />
+                                <path d="M10.5359 11.0075C9.71585 10.8916 7.84666 11.0834 6.93011 12.7782C6.01355 14.4729 6.9373 16.2368 7.51374 16.9069C8.08298 17.5338 9.89226 18.721 11.8114 17.5619C12.2871 17.2746 12.8797 17.0603 13.552 14.8153L13.4738 5.98145C13.3441 6.95419 14.4186 9.23575 17.478 9.5057" />
+                            </svg>
+                            Twitter
+                       </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</svelte:component>

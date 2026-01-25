@@ -13,7 +13,7 @@
 </style>
 
 
-<footer class="s-dark">
+<footer class="s-dark mt-15">
     <div class="bg-[#0f0f11] py-13.5">
         <div class="w-full mx-auto max-w-340 relative px-6 sm:px-6 md:px-8 lg:px-20">
             <div class="grid grid-cols-12 gap-4">

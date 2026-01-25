@@ -11,6 +11,8 @@ class Post extends Model
 {
     use GlobalStatus;
 
+    protected $appends = ['status_badge'];
+    
     public $casts = ['tags' => 'array'];
 
     public function category()
@@ -18,5 +20,33 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault();
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where('admin_check', Status::POST_PENDING);
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('admin_check', Status::POST_APPROVED);
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->where('admin_check', Status::POST_REJECTED);
+    }
+
+    public function scopeTrending($query)
+    {
+        return $query->where('trending', Status::YES);
+    }
+
+    public function scopeMustRead($query)
+    {
+        return $query->where('must_read', Status::YES);
+    }
 }

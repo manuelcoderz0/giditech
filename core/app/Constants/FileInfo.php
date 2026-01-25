@@ -68,8 +68,9 @@ class FileInfo
             'path' => 'assets/images/news',
             'size' => '900x500'
         ];
-        $data['post'] = [
-            'path' => 'assets/images/post',
+        $data['posts'] = [
+            'path' => 'assets/images/posts',
+            'size' => '900x500'
         ];
         return $data;
     }
