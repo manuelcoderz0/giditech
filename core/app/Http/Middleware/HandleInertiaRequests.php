@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Illuminate\Support\Facades\Auth;
@@ -53,6 +54,8 @@ class HandleInertiaRequests extends Middleware
                     'notify'    => Session::get('notify'),
                 ];
             },
+
+            'categories' => Category::active()->orderBy('name')->get(['id', 'name']),
         ];
     }
 }
