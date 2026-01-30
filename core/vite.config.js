@@ -22,6 +22,6 @@ export default defineConfig({
         watch: {
             ignored: ['**/storage/framework/views/**'],
         },
-        hmr: false
+        hmr: false,
     },
 });

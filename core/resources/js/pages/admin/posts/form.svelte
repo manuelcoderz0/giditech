@@ -30,14 +30,14 @@
         height: 500,
         menubar: false,
         plugins: [
-            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
-            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-            'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount'
+            'advlist', "anchor", 'autolink', 'lists', 'link', 'image', 'charmap', 'link', 'preview',
+            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen', 'autosave', 'fullscreen',
+            'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount', 'accordion'
         ],
         toolbar: 'undo redo | blocks | ' +
-            'bold italic forecolor | alignleft aligncenter ' +
+            'bold italic forecolor backcolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat | help',
+            'table | media image link | code accordion anchor restoredraft searchreplace fullscreen | removeformat preview | help' ,
     }
 
     onMount(() => {

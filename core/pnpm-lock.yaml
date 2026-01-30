@@ -17,6 +17,12 @@ importers:
       izitoast:
         specifier: ^1.4.0
         version: 1.4.0
+      jodit:
+        specifier: ^4.8.3
+        version: 4.8.3
+      jodit-svelte:
+        specifier: ^1.0.3
+        version: 1.0.3
       jquery:
         specifier: ^4.0.0
         version: 4.0.0
@@ -769,6 +775,12 @@ packages:
   jiti@2.6.1:
     resolution: {integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==}
     hasBin: true
+
+  jodit-svelte@1.0.3:
+    resolution: {integrity: sha512-kXJFZv4Ed9ZCHD/P3PHwXRrG016IgoHTVdtMKlvC/NoDSSqkq5vViEAwTlMda1rbtcpgsX2+PzS7ZnbdjO5CSA==}
+
+  jodit@4.8.3:
+    resolution: {integrity: sha512-6QN/T4TV5WdF8LMfePyzlqc8xYxtNYCbG6SZKKpIGh/815+TchJy6Qt3OlviRYMxSik1UzvFoaam3PtsEn2wTg==}
 
   jquery@4.0.0:
     resolution: {integrity: sha512-TXCHVR3Lb6TZdtw1l3RTLf8RBWVGexdxL6AC8/e0xZKEpBflBsjh9/8LXw+dkNFuOyW9B7iB3O1sP7hS0Kiacg==}
@@ -1666,6 +1678,10 @@ snapshots:
   izitoast@1.4.0: {}
 
   jiti@2.6.1: {}
+
+  jodit-svelte@1.0.3: {}
+
+  jodit@4.8.3: {}
 
   jquery@4.0.0: {}
 
