@@ -1,8 +1,14 @@
 <script>
     import layout  from '@/js/pages/layouts/app.svelte';
     import { inertia, page } from '@inertiajs/svelte';
+    import { DateTime as dt } from 'luxon';
+    import { get_image, get_file_path, get_file_size, str_limit } from '@/js/stores/helpers.js';
 
     $: page_title = $page.props.page_title;
+    $: last_must_read = $page.props.last_must_read;
+    $: must_read = $page.props.must_read;
+    $: trending = $page.props.trending;
+    $: most_popular = $page.props.most_popular;
 </script>
 
 <svelte:head>
@@ -16,46 +22,36 @@
             <div class="md:flex-1">
             
                 <div class="mb-8 relative">
-                    <img src="https://giditech.net/wp-content/uploads/2025/10/Image_fx-41-1024x559.png" alt="Article Image" class="w-full h-auto hover:scale-105 rounded-lg">
+                    <img src="{ get_image(get_file_path('post') + '/' + last_must_read.image, get_file_size('post')) }" alt="" class="w-full h-auto hover:scale-105 transition-transform duration-500 ease-in-out rounded-lg">
                     <div class="absolute bottom-4 left-4">
                         <span class=" bg-[#900068]">
-                            <a href="" class="text-white text-sm px-3 py-1">Featured</a>
+                            <a href="{ route('category.details', last_must_read.category.slug) }" use:inertia class="text-white text-sm px-3 py-1">{ last_must_read.category.name }</a>
                         </span>
-                        <h2 class="text-[20px] md:text-[24px] lg:text-[28px] md:max-w-[80%] font-bold text-white bg-black py-1 px-1.5 my-2"><a href="">2026 Freelancing Tips For Virtual Assistant Beginners in Nigeria</a></h2>
+                        <h2 class="text-[20px] md:text-[24px] lg:text-[28px] md:max-w-[80%] font-bold text-white bg-black py-1 px-1.5 my-2">
+                            <a href="{ route('post.details', last_must_read.slug) }" use:inertia>{ last_must_read.title }</a>
+                        </h2>
                     </div>
                 </div>
 
                 <div class="grid sm:grid-cols-2 gap-6">
-                    <!-- Card -->
-                    <a class="group flex flex-col focus:outline-hidden" href="#">
-                        <div class="relative pt-[50%] sm:pt-[70%] rounded-xl overflow-hidden">
-                            <img class="size-full absolute top-0 start-0 object-cover group-hover:scale-105 group-focus:scale-105 transition-transform duration-500 ease-in-out rounded-xl" src="https://images.unsplash.com/photo-1586232702178-f044c5f4d4b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=560&q=80" alt="Blog Image">
-                            <span class="absolute top-0 end-0 rounded-se-xl rounded-es-xl text-xs font-medium bg-[#900068] text-white py-1.5 px-3 ">
-                                Featured
-                            </span>
-                        </div>
+                    {#each must_read as post}
+                        <!-- Card -->
+                        <a class="group flex flex-col focus:outline-hidden" href="{ route('post.details', post.slug) }" use:inertia>
+                            <div class="relative pt-[50%] sm:pt-[70%] rounded-xl overflow-hidden">
+                                <img class="size-full absolute top-0 start-0 object-cover group-hover:scale-105 group-focus:scale-105 transition-transform duration-500 ease-in-out rounded-xl" src="{ get_image(get_file_path('post') + '/' + post.image, get_file_size('post')) }" alt="">
+                                <span class="absolute top-0 end-0 rounded-se-xl rounded-es-xl text-xs font-medium bg-[#900068] text-white py-1.5 px-3 ">
+                                    { post.category.name }
+                                </span>
+                            </div>
 
-                        <div class="mt-7">
-                            <h3 class="text-xl font-semibold text-gray-800 group-hover:text-[#900068] dark:text-neutral-300">
-                                Studio by Preline
-                            </h3>
-                        </div>
-                    </a>
-                    <!-- End Card -->
-
-                    <!-- Card -->
-                    <a class="group flex flex-col focus:outline-hidden" href="#">
-                        <div class="relative pt-[50%] sm:pt-[70%] rounded-xl overflow-hidden">
-                            <img class="size-full absolute top-0 start-0 object-cover group-hover:scale-105 group-focus:scale-105 transition-transform duration-500 ease-in-out rounded-xl" src="https://images.unsplash.com/photo-1542125387-c71274d94f0a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=560&q=80" alt="Blog Image">
-                        </div>
-
-                        <div class="mt-7">
-                            <h3 class="text-xl font-semibold text-gray-800 group-hover:text-[#900068] dark:text-neutral-300">
-                                Onsite
-                            </h3>
-                        </div>
-                    </a>
-                    <!-- End Card -->
+                            <div class="mt-7">
+                                <h3 class="text-xl font-semibold text-gray-800 group-hover:text-[#900068] dark:text-neutral-300">
+                                    { post.title }
+                                </h3>
+                            </div>
+                        </a>
+                        <!-- End Card -->
+                    {/each}
 
                 
                 </div>
@@ -69,48 +65,28 @@
                         <h4 class="text-[#161616] dark:text-white text-[14px] font-bold uppercase">Trending <span class="text-[#900068]">Posts</span></h4>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <article class="w-full">
-                            <div class="mb-4">
-                                <a href="" class="w-full h-full">
-                                    <img src="https://giditech.net/wp-content/uploads/2025/09/Image_fx-38-450x245.png" class="object-cover" alt="">
-                                </a>
-                            </div>
-                            <div>
-                                <h4 class="text-[16px] font-bold my-2"><a href="" class="text-[#161616] hover:text-[#900068] dark:text-white">The Rise of AI in Cybersecurity: Opportunities and Challenges</a></h4>
-                                <span class="text-[#8a8a8a] text-xs">September 30, 2025</span>
-                            </div>
-                        </article>
-
-                        <article class="w-full">
-                            <div class="mb-4">
-                                <a href="" class="w-full h-full">
-                                    <img src="https://giditech.net/wp-content/uploads/2025/09/Image_fx-38-450x245.png" class="object-cover" alt="">
-                                </a>
-                            </div>
-                            <div>
-                                <h4 class="text-[16px] font-bold my-2"><a href="" class="text-[#161616] hover:text-[#900068] dark:text-white">The Rise of AI in Cybersecurity: Opportunities and Challenges</a></h4>
-                                <span class="text-[#8a8a8a] text-xs">September 30, 2025</span>
-                            </div>
-                        </article>
-
-                        <article class="w-full">
-                            <div class="mb-4">
-                                <a href="" class="w-full h-full">
-                                    <img src="https://giditech.net/wp-content/uploads/2025/09/Image_fx-38-450x245.png" class="object-cover" alt="">
-                                </a>
-                            </div>
-                            <div>
-                                <h4 class="text-[16px] font-bold my-2"><a href="" class="text-[#161616] hover:text-[#900068] dark:text-white">The Rise of AI in Cybersecurity: Opportunities and Challenges</a></h4>
-                                <span class="text-[#8a8a8a] text-xs">September 30, 2025</span>
-                            </div>
-                        </article>
+                        {#each trending as post} 
+                            <article class="w-full">
+                                <div class="mb-4">
+                                    <a href="{ route('post.details', post.slug) }" use:inertia class="w-full aspect-video block">
+                                        <img src="{ get_image(get_file_path('post') + '/' + post.image, get_file_size('post')) }" class="w-full h-full object-cover" alt="">
+                                    </a>
+                                </div>
+                                <div>
+                                    <h4 class="text-[16px] font-bold my-2">
+                                        <a href="{ route('post.details', post.slug) }" use:inertia class="text-[#161616] hover:text-[#900068] dark:text-white">{ post.title }</a>
+                                    </h4>
+                                    <span class="text-[#8a8a8a] text-xs">{ dt.fromISO(post.created_at).toLocaleString(dt.DATE_MED) }</span>
+                                </div>
+                            </article>
+                        {/each}
                     </div>
                 </div>
 
                
             </div> 
 
-            <div class="md:block w-full md:w-75 rounded-lg sticky top-6.25 md:top-0 mt-6.25 md:mt-0 self-start h-max">
+            <div class="md:block w-full md:w-75 rounded-lg sticky top-6.25 md:top-5 mt-6.25 md:mt-0 self-start h-max">
                 <div>
                     <div class="bg-black py-2.25 px-3.5 mb-6.5">
                         <h5 class="text-[13px] text-white uppercase font-medium">Must Read</h5>

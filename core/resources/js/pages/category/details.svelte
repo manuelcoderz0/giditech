@@ -7,6 +7,7 @@
     $: page_title = $page.props.page_title;
     $: category = $page.props.category;
     $: category_posts = $page.props.category_posts;
+    $: latest_posts = $page.props.latest_posts;
 
     //$: console.log(category);
 </script>
@@ -77,85 +78,43 @@
 
 
 
-            
 
-            <div class="md:block w-full md:w-75 rounded-lg sticky top-6.25 md:top-0 mt-6.25 md:mt-0 self-start h-max">
+
+            <div class="md:block w-full md:w-85 rounded-lg sticky top-6.25 md:top-0 mt-6.25 md:mt-0 self-start h-max">
                 <div>
                     <div class="bg-black py-2.25 px-3.5 mb-6.5">
-                        <h5 class="text-[13px] text-white uppercase font-medium">Top Posts</h5>
+                        <h5 class="text-[13px] text-white uppercase font-medium">Latest Posts</h5>
                     </div>
                     <div class="flex flex-col gap-4">
-                        <article class="flex">
-                            <div class="w-27.5 h-19 max-w-[40%] mr-4.5 shrink-0">
-                                <a href="">
-                                    <img src="https://giditech.net/wp-content/uploads/2025/07/Whisk_1735ead336-1024x559.jpg" alt="Thumbnail" class="w-full h-full object-cover">
-                                </a>
-                            </div>
-                            <div class="flex flex-col">
-                                <h4 class="text-[14px] font-semibold"><a href="" class="hover:text-[#900068] dark:text-white">Beyond Connecting Wallets: What Web3 Was Meant to Be</a></h4>
-                                <div class="flex items-center mt-2">
-                                    <span class="text-[#8a8a8a] text-xs mr-3">July 2, 2025</span>
-                                    <span class="text-[#8a8a8a] text-xs flex items-center gap-1">
-                                        <svg class="stroke-current size-4 stroke-1 fill-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M4 9V20" />
-                                            <path d="M8 4V20" />
-                                            <path d="M12 11V20" />
-                                            <path d="M16 7V20" />
-                                            <path d="M20 14V20" />
-                                        </svg>
-                                        344 views
-                                    </span>
-                                </div>
-                            </div>
-                        </article>
 
-                        <article class="flex">
-                            <div class="w-27.5 h-19 max-w-[40%] mr-4.5 shrink-0">
-                                <a href="">
-                                    <img src="https://giditech.net/wp-content/uploads/2025/07/Whisk_1735ead336-1024x559.jpg" alt="Thumbnail" class="w-full h-full object-cover">
-                                </a>
-                            </div>
-                            <div class="flex flex-col">
-                                <h4 class="text-[14px] font-semibold"><a href="" class="hover:text-[#900068] dark:text-white">Beyond Connecting Wallets: What Web3 Was</a></h4>
-                                <div class="flex items-center mt-2">
-                                    <span class="text-[#8a8a8a] text-xs mr-3">July 2, 2025</span>
-                                    <span class="text-[#8a8a8a] text-xs flex items-center gap-1">
-                                        <svg class="stroke-current size-4 stroke-1 fill-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M4 9V20" />
-                                            <path d="M8 4V20" />
-                                            <path d="M12 11V20" />
-                                            <path d="M16 7V20" />
-                                            <path d="M20 14V20" />
-                                        </svg>
-                                        344 views
-                                    </span>
+                        {#each latest_posts as post}
+                            <article class="flex">
+                                <div class="w-27.5 h-19 max-w-[40%] mr-4.5 shrink-0">
+                                    <a href="{ route('post.details', post.slug) }" use:inertia>
+                                        <img src="{ get_image(get_file_path('post') + '/' + post.image, get_file_size('post')) }" alt="{ post.title }" class="w-full h-full object-cover">
+                                    </a>
                                 </div>
-                            </div>
-                        </article>
+                                <div class="flex flex-col">
+                                    <h4 class="text-[14px] font-semibold">
+                                        <a href="{ route('post.details', post.slug) }" use:inertia class="hover:text-[#900068] dark:text-white">{ post.title }</a>
+                                    </h4>
+                                    <div class="flex items-center mt-2">
+                                        <span class="text-[#8a8a8a] text-xs mr-3"> { dt.fromISO(post.created_at).toFormat('LLLL dd, yyyy') }</span>
+                                        <span class="text-[#8a8a8a] text-xs flex items-center gap-1">
+                                            <svg class="stroke-current size-4 stroke-1 fill-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M4 9V20" />
+                                                <path d="M8 4V20" />
+                                                <path d="M12 11V20" />
+                                                <path d="M16 7V20" />
+                                                <path d="M20 14V20" />
+                                            </svg>
+                                            { post.views } views
+                                        </span>
+                                    </div>
+                                </div>
+                            </article>
+                        {/each}
 
-                        <article class="flex">
-                            <div class="w-27.5 h-19 max-w-[40%] mr-4.5 shrink-0">
-                                <a href="">
-                                    <img src="https://giditech.net/wp-content/uploads/2025/07/Whisk_1735ead336-1024x559.jpg" alt="Thumbnail" class="w-full h-full object-cover">
-                                </a>
-                            </div>
-                            <div class="flex flex-col">
-                                <h4 class="text-[14px] font-semibold"><a href="" class="hover:text-[#900068] dark:text-white">Beyond Connecting Wallets: What Web3 Was</a></h4>
-                                <div class="flex items-center mt-2">
-                                    <span class="text-[#8a8a8a] text-xs mr-3">July 2, 2025</span>
-                                    <span class="text-[#8a8a8a] text-xs flex items-center gap-1">
-                                        <svg class="stroke-current size-4 stroke-1 fill-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M4 9V20" />
-                                            <path d="M8 4V20" />
-                                            <path d="M12 11V20" />
-                                            <path d="M16 7V20" />
-                                            <path d="M20 14V20" />
-                                        </svg>
-                                        344 views
-                                    </span>
-                                </div>
-                            </div>
-                        </article>
                     </div>
                 </div>
                

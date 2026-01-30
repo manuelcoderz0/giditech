@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Page;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class SiteController extends Controller
@@ -17,8 +18,14 @@ class SiteController extends Controller
         $seo_contents = $sections->seo_content;
         $seo_image = @$seo_contents->image ? get_image(get_file_path('seo') . '/' . @$seo_contents->image, get_file_size('seo')) : null;
         
+        $last_must_read   = $this->post_query('must_read', 'desc')->with('category')->first();
+        $must_read      = $this->post_query('must_read', 'desc')->with('category')->skip(1)->take(2)->get();
+
+        $trending  = $this->post_query('trending', 'desc')->skip(1)->take(3)->get();
+        $most_popular   = $this->post_query()->orderByDesc('views')->take(3)->get(['id', 'title', 'slug']);
+
         view()->share(compact('page_title', 'seo_contents', 'seo_image'));
-        return Inertia::render('home', compact('page_title'));
+        return Inertia::render('home', compact('page_title', 'last_must_read', 'must_read', 'trending', 'most_popular'));
     }
 
     public function category_details($slug)
@@ -27,15 +34,15 @@ class SiteController extends Controller
         $firstCategoryNews = $this->post_query(orderBy: 'desc')->where('category_id', $category->id)->with('admin')->first();
         $category_posts    = Inertia::scroll(fn () => $this->post_query(orderBy: 'desc')->where('category_id', $category->id)->with('admin')->select(['id', 'title', 'image', 'slug', 'short_description', 'created_at', 'admin_id'])->paginate(6));
  
-        $latest_news       = $this->post_query(orderBy: 'desc')->with('admin')->take(6)->get(['id', 'title', 'image', 'slug', 'created_at', 'admin_id']);
-        $removeDuplicate   = @$latest_news->first()->id;
+        $latest_posts       = $this->post_query(orderBy: 'desc')->with('admin')->take(3)->get(['id', 'title', 'image', 'slug', 'views', 'created_at', 'admin_id']);
+        $removeDuplicate   = @$latest_posts->first()->id;
         $page_title        = "$category->name Posts";
         
         $seo_contents      = $category->seo_content;
         $seo_image         = get_image(get_file_path('seo') . '/' . @$category->seo_content->image, get_file_size('seo'));
         
         view()->share(compact('page_title', 'seo_contents', 'seo_image'));
-        return Inertia::render('category/details', compact('page_title', 'category', 'category_posts', 'firstCategoryNews', 'latest_news', 'removeDuplicate'));
+        return Inertia::render('category/details', compact('page_title', 'category', 'category_posts', 'firstCategoryNews', 'latest_posts', 'removeDuplicate'));
 
     }
 
@@ -96,11 +103,23 @@ class SiteController extends Controller
         //$posts = Post::active()->approved();
         $posts = Post::active();
         if ($scope) {
+            // Convert snake_case to camelCase for scope method
+            $scope = Str::camel($scope);
             $posts = $posts->$scope();
         }
         if ($orderBy) {
             $posts = $posts->orderBy('id', $orderBy);
         }
         return $posts;
+    }
+
+    public function pages($slug)
+    {
+        $page        = Page::where('slug', $slug)->firstOrFail();
+        $pageTitle   = $page->name;
+        $sections    = $page->secs;
+        $seoContents = $page->seo_content;
+        $seoImage    = @$seoContents->image ? getImage(getFilePath('seo') . '/' . @$seoContents->image, getFileSize('seo')) : null;
+        return view('Template::pages', compact('pageTitle', 'sections', 'seoContents', 'seoImage'));
     }
 }
