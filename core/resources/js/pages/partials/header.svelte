@@ -82,7 +82,7 @@
         <nav class="relative md:flex md:items-center md:justify-between md:gap-3 w-full mx-auto max-w-340 px-6 sm:px-6 md:px-8 lg:px-20 bg-white dark:bg-black">
             <!-- Logo w/ Collapse Button -->
             <div class="flex items-center justify-between py-3 md:py-0 w-full">
-                <a href="{ route('home') }" use:inertia class="flex-none font-semibold text-xl text-black focus:outline-hidden focus:opacity-80 dark:text-white">
+                <a href="{ route('home') }"  use:inertia={{ prefetch: true }} class="flex-none font-semibold text-xl text-black focus:outline-hidden focus:opacity-80 dark:text-white">
                     <img src="{ site_logo() }" alt="Logo" class="h-10 block dark:hidden -ml-7">
                     <img src="{ site_logo('dark') }" alt="Logo" class="h-10 hidden dark:block -ml-7">
                 </a>

@@ -59,7 +59,7 @@
                             </form>
 
                             <div class="text-center mt-8">
-                                <a href="{ route('admin.login') }" use:inertia class="text-white"><i class="las la-sign-in-alt" aria-hidden="true"></i>Back to Login</a>
+                                <a href="{ route('admin.login') }"  use:inertia={{ prefetch: true }} class="text-white"><i class="las la-sign-in-alt" aria-hidden="true"></i>Back to Login</a>
                             </div>
                         </div>
                     </div>

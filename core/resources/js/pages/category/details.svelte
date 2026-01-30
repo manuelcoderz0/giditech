@@ -90,13 +90,13 @@
                         {#each latest_posts as post}
                             <article class="flex">
                                 <div class="w-27.5 h-19 max-w-[40%] mr-4.5 shrink-0">
-                                    <a href="{ route('post.details', post.slug) }" use:inertia>
+                                    <a href="{ route('post.details', post.slug) }" use:inertia={{ prefetch: true }}>
                                         <img src="{ get_image(get_file_path('post') + '/' + post.image, get_file_size('post')) }" alt="{ post.title }" class="w-full h-full object-cover">
                                     </a>
                                 </div>
                                 <div class="flex flex-col">
                                     <h4 class="text-[14px] font-semibold">
-                                        <a href="{ route('post.details', post.slug) }" use:inertia class="hover:text-[#900068] dark:text-white">{ post.title }</a>
+                                        <a href="{ route('post.details', post.slug) }" use:inertia={{ prefetch: true }} class="hover:text-[#900068] dark:text-white">{ post.title }</a>
                                     </h4>
                                     <div class="flex items-center mt-2">
                                         <span class="text-[#8a8a8a] text-xs mr-3"> { dt.fromISO(post.created_at).toFormat('LLLL dd, yyyy') }</span>

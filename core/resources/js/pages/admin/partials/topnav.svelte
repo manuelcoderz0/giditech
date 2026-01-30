@@ -84,7 +84,7 @@
                             </div>
                             <div class="divide-y divide-gray-200">
                                 {#each admin_notifications.slice(0, 5) as notification}
-                                    <a href="{ route('admin.notification.read', notification.id) }" use:inertia  class="flex px-4 py-3 hover:bg-gray-200">
+                                    <a href="{ route('admin.notification.read', notification.id) }"  use:inertia={{ prefetch: true }}  class="flex px-4 py-3 hover:bg-gray-200">
                                         <div class="w-full">
                                             <div class="text-xs mb-1.5 text-gray-400">{ str_limit(notification.title, 50) }</div>
                                             <div class="text-xs text-blue-600">{new Date(notification.created_at).toLocaleString()}</div>
@@ -97,7 +97,7 @@
                                     </div>
                                 {/each}
                             </div>
-                            <a href="{ route('admin.notifications') }" use:inertia class="block py-2 text-xs font-medium text-center text-gray-700 rounded-b-lg bg-gray-50 hover:bg-gray-200">
+                            <a href="{ route('admin.notifications') }"  use:inertia={{ prefetch: true }} class="block py-2 text-xs font-medium text-center text-gray-700 rounded-b-lg bg-gray-50 hover:bg-gray-200">
                                 <div class="inline-flex items-center hover:text-blue-600">
                                     View All
                                 </div>
@@ -133,14 +133,14 @@
                     </button>
 
                     <el-menu anchor="bottom end" popover class="m-w-40 origin-top-right divide-y divide-[#e5e5e5] rounded-lg bg-white outline-1 -outline-offset-1 outline-white/10 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
-                        <a href="{ route('admin.profile') }" use:inertia class="flex items-center gap-1 px-4 py-2 text-sm text-[#071251] focus:bg-gray-100 focus:outline-hidden">
+                        <a href="{ route('admin.profile') }"  use:inertia={{ prefetch: true }} class="flex items-center gap-1 px-4 py-2 text-sm text-[#071251] focus:bg-gray-100 focus:outline-hidden">
                             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" color="#ffffff" fill="none">
                                 <path d="M17 8.5C17 5.73858 14.7614 3.5 12 3.5C9.23858 3.5 7 5.73858 7 8.5C7 11.2614 9.23858 13.5 12 13.5C14.7614 13.5 17 11.2614 17 8.5Z" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M19 20.5C19 16.634 15.866 13.5 12 13.5C8.13401 13.5 5 16.634 5 20.5" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             Profile
                         </a>
-                        <a href="{ route('admin.password') }" use:inertia class="flex items-center gap-1 px-4 py-2 text-sm text-[#071251] focus:bg-gray-100 focus:outline-hidden">
+                        <a href="{ route('admin.password') }"  use:inertia={{ prefetch: true }} class="flex items-center gap-1 px-4 py-2 text-sm text-[#071251] focus:bg-gray-100 focus:outline-hidden">
                             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M14.491 15.5H14.5M9.5 15.5H9.50897"  />
                                 <path d="M4.26781 18.8447C4.49269 20.515 5.87613 21.8235 7.55966 21.9009C8.97627 21.966 10.4153 22 12 22C13.5847 22 15.0237 21.966 16.4403 21.9009C18.1239 21.8235 19.5073 20.515 19.7322 18.8447C19.879 17.7547 20 16.6376 20 15.5C20 14.3624 19.879 13.2453 19.7322 12.1553C19.5073 10.485 18.1239 9.17649 16.4403 9.09909C15.0237 9.03397 13.5847 9 12 9C10.4153 9 8.97627 9.03397 7.55966 9.09909C5.87613 9.17649 4.49269 10.485 4.26781 12.1553C4.12105 13.2453 4 14.3624 4 15.5C4 16.6376 4.12105 17.7547 4.26781 18.8447Z"  />
@@ -148,7 +148,7 @@
                             </svg>
                             Password
                         </a>
-                        <a href="{ route('admin.logout') }" use:inertia class="flex items-center gap-1 px-4 py-2 text-sm text-[#071251] focus:bg-gray-100 focus:outline-hidden">
+                        <a href="{ route('admin.logout') }"  use:inertia={{ prefetch: true }} class="flex items-center gap-1 px-4 py-2 text-sm text-[#071251] focus:bg-gray-100 focus:outline-hidden">
                             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" >
                                 <path d="M7.00003 3C6.07006 3 5.60507 3 5.22357 3.10222C4.1883 3.37962 3.37966 4.18827 3.10225 5.22354C3.00003 5.60504 3.00003 6.07003 3.00003 7L3.00003 17C3.00003 17.93 3.00003 18.395 3.10225 18.7765C3.37965 19.8117 4.1883 20.6204 5.22357 20.8978C5.60507 21 6.07006 21 7.00003 21"  />
                                 <path d="M16.5001 16.5C16.5001 16.5 21 13.1858 21 12C21 10.8141 16.5 7.5 16.5 7.5M20 12L8.00003 12" />

@@ -51,7 +51,7 @@
                                 <div class="mb-[15px]">
                                     <div class="flex justify-between">
                                         <label for="password" class="block mb-2 text-sm font-medium text-white/80">Password</label>
-                                        <a href="" use:inertia class="text-sm font-medium text-blue-300 hover:underline dark:text-primary-500">Forgot password?</a>
+                                        <a href=""  use:inertia={{ prefetch: true }} class="text-sm font-medium text-blue-300 hover:underline dark:text-primary-500">Forgot password?</a>
                                     </div>
                                     <input type="password" bind:value={$form.password} id="password" class="border bg-transparent rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 border-gray-600 text-white dark:focus:border-blue-500" required>
                                 </div>

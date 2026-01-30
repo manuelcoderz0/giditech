@@ -25,10 +25,10 @@
                     <img src="{ get_image(get_file_path('post') + '/' + last_must_read.image, get_file_size('post')) }" alt="" class="w-full h-auto hover:scale-105 transition-transform duration-500 ease-in-out rounded-lg">
                     <div class="absolute bottom-4 left-4">
                         <span class=" bg-[#900068]">
-                            <a href="{ route('category.details', last_must_read.category.slug) }" use:inertia class="text-white text-sm px-3 py-1">{ last_must_read.category.name }</a>
+                            <a href="{ route('category.details', last_must_read.category.slug) }" use:inertia={{ prefetch: true }} class="text-white text-sm px-3 py-1">{ last_must_read.category.name }</a>
                         </span>
                         <h2 class="text-[20px] md:text-[24px] lg:text-[28px] md:max-w-[80%] font-bold text-white bg-black py-1 px-1.5 my-2">
-                            <a href="{ route('post.details', last_must_read.slug) }" use:inertia>{ last_must_read.title }</a>
+                            <a href="{ route('post.details', last_must_read.slug) }" use:inertia={{ prefetch: true }}>{ last_must_read.title }</a>
                         </h2>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                 <div class="grid sm:grid-cols-2 gap-6">
                     {#each must_read as post}
                         <!-- Card -->
-                        <a class="group flex flex-col focus:outline-hidden" href="{ route('post.details', post.slug) }" use:inertia>
+                        <a class="group flex flex-col focus:outline-hidden" href="{ route('post.details', post.slug) }" use:inertia={{ prefetch: true }}>
                             <div class="relative pt-[50%] sm:pt-[70%] rounded-xl overflow-hidden">
                                 <img class="size-full absolute top-0 start-0 object-cover group-hover:scale-105 group-focus:scale-105 transition-transform duration-500 ease-in-out rounded-xl" src="{ get_image(get_file_path('post') + '/' + post.image, get_file_size('post')) }" alt="">
                                 <span class="absolute top-0 end-0 rounded-se-xl rounded-es-xl text-xs font-medium bg-[#900068] text-white py-1.5 px-3 ">
@@ -68,13 +68,13 @@
                         {#each trending as post} 
                             <article class="w-full">
                                 <div class="mb-4">
-                                    <a href="{ route('post.details', post.slug) }" use:inertia class="w-full aspect-video block">
+                                    <a href="{ route('post.details', post.slug) }" use:inertia={{ prefetch: true }} class="w-full aspect-video block">
                                         <img src="{ get_image(get_file_path('post') + '/' + post.image, get_file_size('post')) }" class="w-full h-full object-cover" alt="">
                                     </a>
                                 </div>
                                 <div>
                                     <h4 class="text-[16px] font-bold my-2">
-                                        <a href="{ route('post.details', post.slug) }" use:inertia class="text-[#161616] hover:text-[#900068] dark:text-white">{ post.title }</a>
+                                        <a href="{ route('post.details', post.slug) }" use:inertia={{ prefetch: true }} class="text-[#161616] hover:text-[#900068] dark:text-white">{ post.title }</a>
                                     </h4>
                                     <span class="text-[#8a8a8a] text-xs">{ dt.fromISO(post.created_at).toLocaleString(dt.DATE_MED) }</span>
                                 </div>
@@ -95,12 +95,12 @@
                         {#each most_popular as post}
                             <article class="flex">
                                 <div class="w-27.5 h-19 max-w-[40%] mr-4.5 shrink-0">
-                                    <a href="{ route('post.details', post.slug) }" use:inertia>
+                                    <a href="{ route('post.details', post.slug) }" use:inertia={{ prefetch: true }}>
                                         <img src="{ get_image(get_file_path('post') + '/' + post.image, get_file_size('post')) }" alt="Thumbnail" class="w-full h-full object-cover">
                                     </a>
                                 </div>
                                 <div class="flex flex-col">
-                                    <h4 class="text-[14px] font-semibold"><a href="{ route('post.details', post.slug) }" use:inertia class="hover:text-[#900068] dark:text-white">{ post.title }</a></h4>
+                                    <h4 class="text-[14px] font-semibold"><a href="{ route('post.details', post.slug) }" use:inertia={{ prefetch: true }} class="hover:text-[#900068] dark:text-white">{ post.title }</a></h4>
                                     <div class="flex items-center mt-2">
                                         <span class="text-[#8a8a8a] text-xs mr-3">{ dt.fromISO(post.created_at).toLocaleString(dt.DATE_MED) }</span>
                                         <span class="text-[#8a8a8a] text-xs flex items-center gap-1">
