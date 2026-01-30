@@ -14,6 +14,7 @@
     $: form = useForm({
         id: '',
         name: '',
+        description: '',
     })
 
     onMount(() => {
@@ -30,6 +31,7 @@
             modal.find('#dialog-title').text('Update Category');
             $form.id = data.id;
             $form.name = data.name;
+            $form.description = data.description;
         });
     });
 
@@ -106,21 +108,14 @@
                                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                             <div class="flex flex-wrap justify-end gap-2">
                                                 <div class="flex gap-2">
-                                                    <button command="show-modal" commandfor="edit" data-id="{category.id}" data-name="{category.name}" type="button" class="px-2 py-1 text-xs font-medium text-center inline-flex items-center text-white rounded focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 edit">
+                                                    <button command="show-modal" commandfor="edit" data-id="{category.id}" data-name="{category.name}" data-description="{category.description}" type="button" class="px-2 py-1 text-xs font-medium text-center inline-flex items-center text-white rounded focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 edit">
                                                         <svg class="w-2.5 h-2.5 text-white me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" >
                                                             <path d="M3.78181 16.3092L3 21L7.69086 20.2182C8.50544 20.0825 9.25725 19.6956 9.84119 19.1116L20.4198 8.53288C21.1934 7.75922 21.1934 6.5049 20.4197 5.73126L18.2687 3.58024C17.495 2.80658 16.2406 2.80659 15.4669 3.58027L4.88841 14.159C4.30447 14.7429 3.91757 15.4947 3.78181 16.3092Z"/>
                                                             <path d="M14 6L18 10"/>
                                                         </svg>
                                                         Edit
                                                     </button>
-                                                    <a href="{ route('admin.category.seo', category.id) }" use:inertia={{ prefetch: true }} class="px-2 py-1 text-xs font-medium text-center inline-flex items-center text-white rounded focus:outline-none bg-green-600 hover:bg-green-700 focus:ring-green-800">
-                                                        <svg class="w-2.5 h-2.5 text-white me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" >
-                                                            <path d="M3.78181 16.3092L3 21L7.69086 20.2182C8.50544 20.0825 9.25725 19.6956 9.84119 19.1116L20.4198 8.53288C21.1934 7.75922 21.1934 6.5049 20.4197 5.73126L18.2687 3.58024C17.495 2.80658 16.2406 2.80659 15.4669 3.58027L4.88841 14.159C4.30447 14.7429 3.91757 15.4947 3.78181 16.3092Z"/>
-                                                            <path d="M14 6L18 10"/>
-                                                        </svg>
-                                                        
-                                                        SEO Setting
-                                                    </a>
+
                                                     {#if category.status}
                                                         <button command="show-modal" commandfor="confirm" data-question="Are you sure to disable this category? This action can be undone." data-action="{ route('admin.category.status', category.id) }" type="button" class="px-2 py-1 text-xs font-medium text-center inline-flex items-center text-white rounded focus:outline-none bg-red-600 hover:bg-red-700 focus:ring-red-800 confirm">
                                                             <svg class="size-3 me-1 stroke-2 stroke-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="none">
@@ -182,9 +177,10 @@
                                     <div class="w-full mt-3">
                                         <label for="name" class="block mb-2 text-sm font-medium text-gray-500">Name</label>
                                         <input type="text" bind:value={$form.name} id="name" class="bg-gray-50 border border-gray-300 font-medium text-gray-600 placeholder:text-gray-400 text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500" required />
-                                        {#if $form.errors.name}
-                                            <small class="form-error text-red-600">{$form.errors.name}</small>
-                                        {/if}
+                                    </div>
+                                    <div class="w-full mt-3">
+                                        <label for="description" class="block mb-2 text-sm font-medium text-gray-500">Description</label>
+                                        <textarea rows="5" bind:value={$form.description} id="description" class="bg-gray-50 border border-gray-300 font-medium text-gray-600 placeholder:text-gray-400 text-sm rounded-lg block w-full p-2.5 focus:ring-blue-500 focus:border-blue-500" required></textarea>
                                     </div>
                                     
                                 </div>

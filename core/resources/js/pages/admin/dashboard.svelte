@@ -40,7 +40,7 @@
             </div>
             <div class="flex justify-between w-full">
                 <div>
-                    <h6 class="font-medium">Total Users</h6>
+                    <h6 class="font-medium">Total Posts</h6>
                     <h3 class="font-medium text-xl">23</h3>
                 </div>
                 <div class="flex items-center mr-3 md:hidden">
@@ -62,7 +62,7 @@
             </div>
             <div class="flex justify-between w-full">
                 <div>
-                    <h6 class="">Active Users</h6>
+                    <h6 class="">Active Posts</h6>
                     <h3 class="font-medium text-xl">23</h3>
                 </div>
                 <div class="flex items-center mr-3 md:hidden">
@@ -83,7 +83,7 @@
             </div>
             <div class="flex justify-between w-full">
                 <div>
-                    <h6 class="">Email Unverified</h6>
+                    <h6 class="">Pending Posts</h6>
                     <h3 class="font-medium text-xl">23</h3>
                 </div>
                 <div class="flex items-center mr-3 md:hidden">
@@ -104,7 +104,7 @@
             </div>
             <div class="flex justify-between w-full">
                 <div>
-                    <h6 class="">Mobile Unverified</h6>
+                    <h6 class="">Rejected Posts</h6>
                     <h3 class="font-medium text-xl">23</h3>
                 </div>
                 <div class="flex items-center mr-3 md:hidden">

@@ -41,13 +41,13 @@
 
           
             <li class="mr-4 relative group hs-tooltip [--placement:auto]">
-                <a href="" use:inertia={{ prefetch: true }} class="hs-tooltip-toggle">
-                    <svg class="w-5 h-5 stroke-white stroke-[1.5] fill-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M17.4776 10.0001C17.485 10 17.4925 10 17.5 10C19.9853 10 22 12.0147 22 14.5C22 16.9853 19.9853 19 17.5 19H7C4.23858 19 2 16.7614 2 14C2 11.4003 3.98398 9.26407 6.52042 9.0227M17.4776 10.0001C17.4924 9.83536 17.5 9.66856 17.5 9.5C17.5 6.46243 15.0376 4 12 4C9.12324 4 6.76233 6.20862 6.52042 9.0227M17.4776 10.0001C17.3753 11.1345 16.9286 12.1696 16.2428 13M6.52042 9.0227C6.67826 9.00768 6.83823 9 7 9C8.12582 9 9.16474 9.37209 10.0005 10" stroke-linecap="round" stroke-linejoin="round"></path>
+                <a href="{ route('home') }" use:inertia={{ prefetch: true }} class="hs-tooltip-toggle">
+                    <svg class="w-5 h-5 stroke-white stroke-[1.5] fill-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linejoin="round">
+                        <path d="M12 22C6.47715 22 2 17.5228 2 12C2 9.20746 3.14465 6.68227 4.99037 4.86802M12 22C11.037 21.2864 11.1907 20.4555 11.6738 19.6247C12.4166 18.3474 12.4166 18.3474 12.4166 16.6444C12.4166 14.9414 13.4286 14.1429 17 14.8571C18.6047 15.1781 19.7741 12.9609 21.8573 13.693M12 22C16.9458 22 21.053 18.4096 21.8573 13.693M21.8573 13.693C21.9511 13.1427 22 12.5771 22 12C22 7.11857 18.5024 3.05405 13.8766 2.17579M13.8766 2.17579C14.3872 3.11599 14.1816 4.23551 13.1027 4.66298C11.3429 5.3603 12.6029 6.64343 11.1035 7.4356C10.1038 7.96372 8.6044 7.83152 7.10496 6.24716C6.31517 5.41264 5.83966 4.95765 4.99037 4.86802M13.8766 2.17579C13.2687 2.06039 12.6414 2 12 2C9.26969 2 6.79495 3.09421 4.99037 4.86802" />
                     </svg>
 
                     <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible rounded-md z-10 py-1.5 px-2 bg-gray-900 text-xs text-white" role="tooltip">
-                        Services
+                        Visit Site
                     </span>
                 </a>
             </li>

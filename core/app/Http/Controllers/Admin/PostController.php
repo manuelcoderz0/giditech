@@ -22,6 +22,33 @@ class PostController extends Controller
         return Inertia::render('admin/posts/index', compact('page_title', 'posts', 'categories'));
     }
 
+    public function pending()
+    {
+        $page_title  = "Pending Posts";
+        $posts       = $this->post_data('pending');
+        $categories = Category::active()->orderBy('name')->get();
+        view()->share(compact('page_title'));
+        return Inertia::render('admin/posts/index', compact('page_title', 'posts', 'categories'));
+    }
+
+    public function approved()
+    {
+        $page_title  = "Approved Posts";
+        $posts       = $this->post_data('approved');
+        $categories = Category::active()->orderBy('name')->get();
+        view()->share(compact('page_title'));
+        return Inertia::render('admin/posts/index', compact('page_title', 'posts', 'categories'));
+    }
+
+    public function rejected()
+    {
+        $page_title = "Rejected Posts";
+        $posts = $this->post_data('rejected');
+        $categories = Category::active()->orderBy('name')->get();
+        view()->share(compact('page_title'));
+        return Inertia::render('admin/posts/index', compact('page_title', 'posts', 'categories'));
+    }
+
     public function post_data($scope = null)
     {
         if ($scope) {
@@ -29,7 +56,7 @@ class PostController extends Controller
         } else {
             $posts = Post::query();
         }
-        return $posts->searchable(['title', 'admin:username'])->filter(['category_id'])->dateFilter()->with('category', 'admin')->orderByDesc('id')->paginate(12);
+        return Inertia::scroll(fn () => $posts->searchable(['title', 'admin:username'])->filter(['category_id'])->dateFilter()->with('category', 'admin')->orderByDesc('id')->paginate(12));
     }
 
     public function create(){
@@ -52,15 +79,23 @@ class PostController extends Controller
     public function store(Request $request, $id = 0)
     {
         //dd($request->all());
-        $request->validate([
+        $rules = [
             'category_id'       => 'required|integer|exists:categories,id',
             'title'             => 'required|string',
             'short_description' => 'required',
             'description'       => 'required',
             'video_link'        => 'required_if:have_video,==,on|url',
             'tags'              => 'required|max:60000|array',
-            'image'             => [$id ? 'nullable' : 'required', 'image', new FileTypeValidate(['jpg', 'jpeg', 'png'])]
-        ]);
+        ];
+
+        // Only validate image as file if it's actually being uploaded
+        if ($request->file('image')) {
+            $rules['image'] = ['required', 'image', new FileTypeValidate(['jpg', 'jpeg', 'png'])];
+        } else {
+            $rules['image'] = [$id ? 'nullable' : 'required'];
+        }
+
+        $request->validate($rules);
 
         if ($id) {
             $post = Post::findOrFail($id);
@@ -70,10 +105,10 @@ class PostController extends Controller
             $message = 'Post created successfully';
         }
 
-        if ($request->has('image')) {
+        if ($request->file('image')) {
             @$old = $post->image;
             try {
-                $post->image =  file_uploader($request->image, get_file_path('posts'), get_file_size('posts'), @$old);
+                $post->image =  file_uploader($request->file('image'), get_file_path('posts'), get_file_size('posts'), @$old);
             } catch (\Exception $exp) {
                 throw ValidationException::withMessages(['error' => 'Couldn\'t upload your image']);
             }

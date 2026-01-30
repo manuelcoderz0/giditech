@@ -76,6 +76,24 @@
                                 </svg>
                                 All Posts
                             </a>
+                            <a href="{ route('admin.post.pending') }" use:inertia={{ prefetch: true }} use:active={'admin.post.pending'} class="flex items-center px-3 py-2 rounded-md hover:bg-[#4634ff]">
+                                <svg class="w-2 h-2 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                </svg>
+                                Pending Posts
+                            </a>
+                            <a href="{ route('admin.post.approved') }" use:inertia={{ prefetch: true }} use:active={'admin.post.approved'} class="flex items-center px-3 py-2 rounded-md hover:bg-[#4634ff]">
+                                <svg class="w-2 h-2 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                </svg>
+                                Approved Posts
+                            </a>
+                            <a href="{ route('admin.post.rejected') }" use:inertia={{ prefetch: true }} use:active={'admin.post.rejected'} class="flex items-center px-3 py-2 rounded-md hover:bg-[#4634ff]">
+                                <svg class="w-2 h-2 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                                </svg>
+                                Rejected Posts
+                            </a>
                         </div>
                     </details>
                 </li>

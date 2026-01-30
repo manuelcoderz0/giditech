@@ -22,6 +22,7 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|unique:categories,name,' . $id,
+            'description' => 'required|string',
         ]);
 
         if ($id) {
@@ -33,6 +34,7 @@ class CategoryController extends Controller
         }
 
         $category->name = $request->name;
+        $category->description = $request->description;
         $category->save();
 
         $notify[] = ['success', $message];
