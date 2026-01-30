@@ -11,17 +11,19 @@
     $: page_title = $page.props.page_title;
     $: categories   = $page.props.categories;
     $: tinymce_api_key = $page.props.tinymce_api_key;
+    $: post = $page.props.post ?? '';
 
     $: form = useForm({
-        image:  '',
-        title:  '',
-        category_id: '',
-        tags:   '',
-        short_description: '',
-        description:  '',
-        trending: '',
-        must_read: '',
-        status: '',
+        id: post.id,
+        image:  post.image,
+        title:  post.title,
+        category_id: post.category_id,
+        tags:   post.tags,
+        short_description: post.short_description,
+        description:  post.description,
+        trending: post.trending,
+        must_read: post.must_read,
+        status: post.status,
     })
 
     let conf = {
@@ -123,9 +125,9 @@
                 <div class="mb-5">
                     <label for="tags" class="block mb-2 text-sm font-medium text-gray-800">Tags</label>
                     <select name="tags" id="tags" bind:value={$form.tags} style="background-color: #f9fafb; border: 1px solid #d1d5db; font-weight: 500; color: #4b5563; font-size: 0.875rem; border-radius: 0.5rem; padding: 0.625rem;" class="tags" multiple required>
-                        {#if $form.tags}
+                        {#if $form.tags && Array.isArray($form.tags)}
                             {#each $form.tags as tag}
-                                <option style="font-size: 0.875rem; font-color: #4b5563;" value={tag.id}>{tag.name}</option>
+                                <option style="font-size: 0.875rem; font-color: #4b5563;" value={tag}>{tag}</option>
                             {/each}
                         {/if}
                     </select>

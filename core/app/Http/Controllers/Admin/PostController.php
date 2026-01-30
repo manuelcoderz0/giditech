@@ -29,21 +29,24 @@ class PostController extends Controller
         } else {
             $posts = Post::query();
         }
-        return $posts->searchable(['title', 'user:username'])
-            ->filter(['category_id'])
-            ->dateFilter()
-            ->with('category', 'user')
-            ->orderByDesc('id')
-            ->paginate(12);
+        return $posts->searchable(['title', 'admin:username'])->filter(['category_id'])->dateFilter()->with('category', 'admin')->orderByDesc('id')->paginate(12);
     }
 
-    public function create()
-    {
+    public function create(){
         $page_title = "Create Post";
         $categories = Category::active()->orderByDesc('id')->get();
         $tinymce_api_key = config('services.tinymce.api_key');
         view()->share(compact('page_title'));
         return Inertia::render('admin/posts/form', compact('page_title', 'categories', 'tinymce_api_key'));
+    }
+
+    public function edit($id){
+        $page_title = "Edit Post";
+        $categories = Category::active()->orderByDesc('id')->get();
+        $tinymce_api_key = config('services.tinymce.api_key');
+        $post = Post::where('id', $id)->firstOrFail();
+        view()->share(compact('page_title'));
+        return Inertia::render('admin/posts/form', compact('page_title', 'post', 'categories', 'tinymce_api_key'));
     }
 
     public function store(Request $request, $id = 0)
@@ -78,6 +81,7 @@ class PostController extends Controller
 
         $purifier                = new \HTMLPurifier();
         $post->admin_id          = auth('admin')->id();
+        $post->admin_check       = Status::POST_APPROVED;
         $post->category_id       = $request->category_id;
         $post->title             = $request->title;
         $post->slug              = slug($request->title);
@@ -95,8 +99,7 @@ class PostController extends Controller
         return back()->withNotify($notify);
     }
 
-    public function status($id)
-    {
+    public function status($id){
         return Post::change_status($id);
     }
 }
