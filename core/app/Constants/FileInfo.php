@@ -70,7 +70,7 @@ class FileInfo
         ];
         $data['posts'] = [
             'path' => 'assets/images/posts',
-            'size' => '900x500'
+            'size' => '1365x768'
         ];
         return $data;
     }

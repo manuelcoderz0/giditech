@@ -55,7 +55,7 @@ class HandleInertiaRequests extends Middleware
                 ];
             },
 
-            'categories' => Category::active()->orderBy('name')->get(['id', 'name']),
+            'categories' => Category::active()->orderBy('name')->get(['slug', 'name']),
         ];
     }
 }

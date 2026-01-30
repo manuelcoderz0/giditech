@@ -1,6 +1,7 @@
 <script>
     import { site_logo, site_favicon } from '@/js/stores/helpers.js';
     import { inertia, page } from '@inertiajs/svelte';
+    import { DateTime as dt } from 'luxon';
 
     $: categories = $page.props.categories;
 
@@ -37,7 +38,7 @@
         <div class="w-full mx-auto max-w-340 relative px-6 sm:px-6 md:px-8 lg:px-20">
             <div class="flex items-center justify-between h-full relative">
                 <div class="mr-3.75 flex items-center">
-                    <span class="text-white text-[13px]">Saturday, Oct 2022</span>
+                    <span class="text-white text-[13px]">{ dt.now().toFormat('cccc, LLL yyyy') }</span>
                 </div>
 
                 <div class="ml-3.75 flex items-center">
@@ -70,7 +71,8 @@
             <!-- Logo w/ Collapse Button -->
             <div class="flex items-center justify-between py-3 md:py-0 w-full">
                 <a href="{ route('home') }" use:inertia class="flex-none font-semibold text-xl text-black focus:outline-hidden focus:opacity-80 dark:text-white">
-                    <img src="{ site_logo() }" alt="Logo" class="h-8">
+                    <img src="{ site_logo() }" alt="Logo" class="h-10 block dark:hidden -ml-7">
+                    <img src="{ site_logo('dark') }" alt="Logo" class="h-10 hidden dark:block -ml-7">
                 </a>
 
                 <!-- Collapse Button -->
@@ -123,7 +125,7 @@
                             <div class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] md:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 relative w-full md:w-52 hidden z-10 top-full ps-7 md:ps-0 md:bg-white md:rounded-lg md:shadow-md before:absolute before:-top-4 before:start-0 before:w-full before:h-5 md:after:hidden after:absolute after:top-1 after:start-4.5 after:w-0.5 after:h-[calc(100%-4px)] after:bg-gray-100 dark:bg-transparent dark:md:bg-black dark:after:bg-neutral-700" role="menu" aria-orientation="vertical" aria-labelledby="hs-header-classic-dropdown">
                                 <div class="py-1 md:px-1 space-y-0.5">
                                     {#each categories as category}
-                                        <a href="{ route('category.details', category.id) }" class="py-1.5 px-2 flex items-center text-sm font-semibold text-gray-800 hover:text-gray-500 focus:outline-hidden focus:text-gray-500 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500">
+                                        <a href="{ route('category.details', category.slug) }" use:inertia class="py-1.5 px-2 flex items-center text-sm font-semibold text-gray-800 hover:text-gray-500 focus:outline-hidden focus:text-gray-500 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500">
                                             { category.name }
                                         </a>
                                     {/each}

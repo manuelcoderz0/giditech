@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Page;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,53 +12,54 @@ class SiteController extends Controller
 {
     public function index(){
 
-        $page_title   = 'Home';
-        //$sections = Page::where('slug','/')->first();
-        //$seoContents = $sections->seo_content;
-        //$seoImage = @$seoContents->image ? getImage(getFilePath('seo') . '/' . @$seoContents->image, getFileSize('seo')) : null;
+        $page_title   = 'Home - Giditech';
+        $sections = Page::where('slug','/')->first();
+        $seo_contents = $sections->seo_content;
+        $seo_image = @$seo_contents->image ? get_image(get_file_path('seo') . '/' . @$seo_contents->image, get_file_size('seo')) : null;
         
-        view()->share(compact('page_title'));
+        view()->share(compact('page_title', 'seo_contents', 'seo_image'));
         return Inertia::render('home', compact('page_title'));
     }
 
-    public function category_details($id)
+    public function category_details($slug)
     {
-        $category          = Category::active()->where('id', $id)->with('posts')->firstOrFail();
-        $firstCategoryNews = $this->post_query(orderBy: 'desc')->where('category_id', $category->id)->first();
-        $category_news     = $this->post_query(orderBy: 'desc')->where('category_id', $category->id)->take(6)->get(['id', 'title', 'image', 'slug', 'created_at']);
-        $latest_news       = $this->post_query(orderBy: 'desc')->take(6)->get(['id', 'title', 'image', 'slug', 'created_at']);
+        $category          = Category::active()->where('slug', $slug)->with('posts')->firstOrFail();
+        $firstCategoryNews = $this->post_query(orderBy: 'desc')->where('category_id', $category->id)->with('admin')->first();
+        $category_posts    = Inertia::scroll(fn () => $this->post_query(orderBy: 'desc')->where('category_id', $category->id)->with('admin')->select(['id', 'title', 'image', 'slug', 'short_description', 'created_at', 'admin_id'])->paginate(6));
+ 
+        $latest_news       = $this->post_query(orderBy: 'desc')->with('admin')->take(6)->get(['id', 'title', 'image', 'slug', 'created_at', 'admin_id']);
         $removeDuplicate   = @$latest_news->first()->id;
         $page_title        = "$category->name Posts";
-
-        $seo_contents      = $category->seoContent;
+        
+        $seo_contents      = $category->seo_content;
         $seo_image         = get_image(get_file_path('seo') . '/' . @$category->seo_content->image, get_file_size('seo'));
-
+        
         view()->share(compact('page_title', 'seo_contents', 'seo_image'));
-        return Inertia::render('category/details', compact('page_title', 'category', 'category_news', 'firstCategoryNews', 'latest_news', 'removeDuplicate'));
+        return Inertia::render('category/details', compact('page_title', 'category', 'category_posts', 'firstCategoryNews', 'latest_news', 'removeDuplicate'));
 
     }
 
     public function post_details($slug)
     {
         
-        $post = $this->post_query()->where('slug', $slug)->firstOrFail();
+        $post = $this->post_query()->with('admin', 'category')->where('slug', $slug)->firstOrFail();
         $post->increment('views');
 
         $page_title   = $post->title;
-        $column       = ['id', 'title', 'image', 'slug', 'created_at'];
-        $topNews      = $this->post_query()->where('id', '<>', $post->id)->orderByDesc('views')->take(6)->get($column);
-        $trendingNews = $this->post_query('trending', 'desc')->where('id', '<>', $post->id)->take(4)->get($column);
+        $column       = ['id', 'title', 'image', 'slug', 'views', 'created_at'];
+        $top_posts      = $this->post_query()->where('id', '<>', $post->id)->orderByDesc('views')->take(3)->get($column);
+        $trending_posts = $this->post_query('trending', 'desc')->where('id', '<>', $post->id)->take(3)->get($column);
         $latest_news  = $this->post_query(orderBy: 'desc')->where('id', '<>', $post->id)->take(6)->get($column);
 
         $seo_contents['keywords']           = $post->tags ?? [];
         $seo_contents['social_title']       = $post->title;
         $seo_contents['description']        = str_limit(strip_tags($post->short_description), 150);
         $seo_contents['social_description'] = str_limit(strip_tags($post->short_description), 150);
-        $seo_image                          = get_image(get_file_path('news') . '/' . @$post->image, get_file_size('news'));
+        $seo_image                          = get_image(get_file_path('posts') . '/' . @$post->image, get_file_size('posts'));
         $seo_contents                       = json_decode(json_encode($seo_contents));
 
         view()->share(compact('page_title', 'seo_contents', 'seo_image'));
-        return Inertia::render('post/details', compact('page_title', 'post', 'topNews', 'trendingNews', 'latest_news'));
+        return Inertia::render('post/details', compact('page_title', 'post', 'top_posts', 'trending_posts', 'latest_news'));
     }
 
     public function placeholder_image($size = null)
@@ -91,7 +93,8 @@ class SiteController extends Controller
 
     public function post_query($scope = null, $orderBy = null)
     {
-        $posts = Post::active()->approved();
+        //$posts = Post::active()->approved();
+        $posts = Post::active();
         if ($scope) {
             $posts = $posts->$scope();
         }

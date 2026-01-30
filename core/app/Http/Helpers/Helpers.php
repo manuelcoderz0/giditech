@@ -48,6 +48,16 @@ function key_to_title($text)
     return ucfirst(preg_replace("/[^A-Za-z0-9 ]/", ' ', $text));
 }
 
+function site_favicon()
+{
+    return get_image(get_file_path('logoIcon') . '/favicon.png');
+}
+
+function site_logo($type = null){
+    $name = $type ? "/logo_$type.png" : '/logo.png';
+    return get_image(get_file_path('logoIcon') . $name);
+}
+
 function slug($string)
 {
     return Str::slug($string);

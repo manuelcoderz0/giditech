@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Constants\Status;
 use App\Lib\Searchable;
 use App\Models\AdminNotification;
+use App\Models\Frontend;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
@@ -39,6 +40,13 @@ class AppServiceProvider extends ServiceProvider
                 return 0;
             },
         ]);
+
+        view()->composer('partials.seo', function ($view) {
+            $seo = Frontend::where('data_keys', 'seo.data')->first();
+            $view->with([
+                'seo' => $seo ? $seo->data_values : $seo,
+            ]);
+        });
 
         
         \URL::forceScheme('https');

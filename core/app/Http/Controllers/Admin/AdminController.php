@@ -45,7 +45,7 @@ class AdminController extends Controller {
             ])->validate();
             try {
                 $old         = $user->image;
-                $user->image = fileUploader($request->image, getFilePath('adminProfile'), getFileSize('adminProfile'), $old);
+                $user->image = file_uploader($request->image, get_file_path('adminProfile'), get_file_size('adminProfile'), $old);
             } catch (\Exception $exp) {
                 $notify[] = ['error', 'Couldn\'t upload your image'];
                 return back()->withNotify($notify);

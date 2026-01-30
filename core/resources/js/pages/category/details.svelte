@@ -1,9 +1,14 @@
 <script>
     import layout  from '@/js/pages/layouts/app.svelte';
-    import { inertia, page } from '@inertiajs/svelte';
+    import { inertia, page, InfiniteScroll } from '@inertiajs/svelte';
+    import { DateTime as dt } from 'luxon';
+    import { get_image, get_file_path, get_file_size, str_limit } from '@/js/stores/helpers.js';
 
     $: page_title = $page.props.page_title;
-    $: category_news = $page.props.category_news;
+    $: category = $page.props.category;
+    $: category_posts = $page.props.category_posts;
+
+    //$: console.log(category);
 </script>
 
 <svelte:head>
@@ -33,37 +38,46 @@
 
 
             <div class="md:flex-1">
-                <h1 class="text-[19px] font-semibold uppercase pl-3.5 mb-10 text-black dark:text-white border-l-3 border-[#900068]">Browsing: <span class="font-bold">{ page_title }</span></h1>
+                <h1 class="text-[19px] font-semibold uppercase pl-3.5 mb-10 text-black dark:text-white border-l-3 border-[#900068]">Browsing: <span class="font-bold">{ category.name }</span></h1>
                 <div class="mb-10 -mt-4.5">
-                    <p class="text-[15px] text-[#505050] dark:text-[#ccc]">Every click, every login, every app are all a potential entry point. This category keeps you one step ahead with real-world cybersecurity tips, breakdowns of major threats, and stories behind digital defense. No fear tactics.  Just clarity, context, and the knowledge to protect what matters.</p>
+                    <p class="text-[15px] text-[#505050] dark:text-[#ccc]">{ category.description }</p>
                 </div>
-                <div class="grid sm:grid-cols-2 gap-8">
-                    {#each category_news as news}
-                        <article>
-                            <div class="mb-4 relative ">
-                                <a href="{ route('post.details', news.slug) }" class="block overflow-hidden">
-                                    <img src="https://giditech.net/wp-content/uploads/2025/10/Image_fx-41-450x245.png" alt="Article Image" class="w-full h-auto transform hover:scale-105 transition-transform duration-300 ease-in-out">
-                                </a>    
-                                <span class="top-auto absolute bg-[#900068] bottom-0 z-1 max-w-[calc(100%-14px)]">
-                                    <a href="" class="inline-flex  px-2 text-white rounded uppercase text-[11px]">Cybersecurity</a>
-                                </span> 
-                            </div>
-                            <div class="relative">
-                                <div class="flex flex-col ">
-                                    <h2 class="text-[20px] font-bold text-[#161616] dark:text-white hover:text-[#900068] leading-[1.36] mb-2"><a href="">Password Tricks Hackers Hate: How to Build Unbreakable Logins</a></h2>
-                                    <div>
-                                        <span class="text-[#8a8a8a] text-[12px] mr-1">By <a href="" class="text-[#191919] dark:text-[#ececec]">Freda Amodun</a></span>
-                                        <span class="text-[#8a8a8a] text-[12px] mr-4.5">-   October 7, 2025</span>
+                <svelte:component this={ InfiniteScroll } data="category_posts">
+                    <div class="grid sm:grid-cols-2 gap-8">
+                        {#each category_posts.data as post}
+                            <article>
+                                <div class="mb-4 relative ">
+                                    <a href="{ route('post.details', post.slug) }" use:inertia={{ prefetch: true }} aria-label="" class="block overflow-hidden">
+                                        <img src="{ get_image(get_file_path('post') + '/' + post.image, get_file_size('post')) }" alt="{ post.title }" class="w-full h-auto transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                                    </a>    
+                                    <span class="top-auto absolute bg-[#900068] bottom-0 z-1 max-w-[calc(100%-14px)]">
+                                        <a href="{ route('post.details', post.slug) }" use:inertia={{ prefetch: true }} class="inline-flex  px-2 text-white rounded uppercase text-[11px]">{ category.name }</a>
+                                    </span> 
+                                </div>
+                                <div class="relative">
+                                    <div class="flex flex-col ">
+                                        <h2 class="text-[20px] font-bold text-[#161616] dark:text-white hover:text-[#900068] leading-[1.36] mb-2">
+                                            <a href="{ route('post.details', post.slug) }" use:inertia={{ prefetch: true }}>{ str_limit(post.title, 200) }</a>
+                                        </h2>
+                                        <div>
+                                            <span class="text-[#8a8a8a] text-[12px] mr-1">By <a href="" class="text-[#191919] dark:text-[#ececec]">{ post.admin.name }</a></span>
+                                            <span class="text-[#8a8a8a] text-[12px] mr-4.5">- { dt.fromISO(post.created_at).toFormat('dd LLL yyyy hh:mm a') } </span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 ">
+                                        <p class="text-[#505050] dark:text-[#ccc] text-[15px]">{ str_limit(post.short_description, 500) }</p>
                                     </div>
                                 </div>
-                                <div class="mt-4 ">
-                                    <p class="text-[#505050] dark:text-[#ccc] text-[15px]">Did you know it takes a hacker about eight seconds or less to crack an average password? Think about that…</p>
-                                </div>
-                            </div>
-                        </article>
-                    {/each}
-                </div>
+                            </article>
+                        {/each}
+                    </div>
+                </svelte:component>
             </div>
+
+
+
+
+            
 
             <div class="md:block w-full md:w-75 rounded-lg sticky top-6.25 md:top-0 mt-6.25 md:mt-0 self-start h-max">
                 <div>

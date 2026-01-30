@@ -25,6 +25,11 @@ class Post extends Model
         return $this->belongsTo(User::class)->withDefault();
     }
 
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class)->withDefault();
+    }
+
     public function scopePending($query)
     {
         return $query->where('admin_check', Status::POST_PENDING);

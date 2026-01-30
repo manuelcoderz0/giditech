@@ -17,7 +17,7 @@
     <div class="bg-[#0f0f11] py-13.5">
         <div class="w-full mx-auto max-w-340 relative px-6 sm:px-6 md:px-8 lg:px-20">
             <div class="grid grid-cols-12 gap-4">
-                <div class="col-span-12 md:col-span-4 mb-12">
+                <div class="col-span-12 md:col-span-6 lg:col-span-4 mb-12">
                     <h5 class="text-white uppercase text-[15px] font-bold mb-7">Most Popular</h5>
                     <div class="flex flex-col gap-4">
                         <div class="flex gap-4 relative border-b border-[#333339] pb-4">
@@ -103,7 +103,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-12 md:col-span-4 mb-12">
+                <div class="col-span-12 md:col-span-6 lg:col-span-4 mb-12">
                     <h5 class="text-white uppercase text-[15px] font-bold mb-7">Most Popular</h5>
                     <div class="flex flex-col gap-4">
                         <div class="flex gap-4 relative border-b border-[#333339] pb-4">
@@ -189,7 +189,7 @@
                     </div>
                 </div>
 
-                <div class="col-span-12 md:col-span-4 mb-12">
+                <div class="col-span-12 md:col-span-full lg:col-span-4 mb-12">
                     <div class="bg-black border-4 border-[#111] ">
                         <div class="px-8 py-6 max-w-175 text-center mx-auto">
                             <h3 class="text-[24px] text-[#ececec] font-bold mb-4.5 mt-2">Subscribe to Updates</h3>

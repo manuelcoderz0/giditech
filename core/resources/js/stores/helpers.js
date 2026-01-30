@@ -72,7 +72,7 @@ export function search_url(currentUrl) {
 }
 
 export function site_logo(type = null) {
-    const name = type ? `/logo_${type}.svg` : '/logo.png';
+    const name = type ? `/logo_${type}.png` : '/logo.png';
     return get_image(get_file_path('logoIcon') + name);
 }
 

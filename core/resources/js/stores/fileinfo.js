@@ -9,5 +9,6 @@ export const FileInfo = {
     seo: { path: '/assets/images/seo', size: '1180x600' },
     userProfile: { path: '/assets/images/user/profile', size: '350x300' },
     adminProfile: { path: '/assets/admin/images/profile', size: '400x400' },
-    productModule: { path: '/assets/images/product_module' },
+    admin_profile: { path: '/assets/admin/images/profile', size: '400x400' },
+    post: { path: '/assets/images/posts', size: '1365x768' },
 };

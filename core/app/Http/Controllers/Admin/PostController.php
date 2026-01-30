@@ -77,6 +77,7 @@ class PostController extends Controller
         }
 
         $purifier                = new \HTMLPurifier();
+        $post->admin_id          = auth('admin')->id();
         $post->category_id       = $request->category_id;
         $post->title             = $request->title;
         $post->slug              = slug($request->title);
