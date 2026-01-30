@@ -22,7 +22,7 @@ class SiteController extends Controller
         $must_read      = $this->post_query('must_read', 'desc')->with('category')->skip(1)->take(2)->get();
 
         $trending  = $this->post_query('trending', 'desc')->skip(1)->take(3)->get();
-        $most_popular   = $this->post_query()->orderByDesc('views')->take(3)->get(['id', 'title', 'slug']);
+        $most_popular   = $this->post_query()->orderByDesc('views')->take(3)->get(['id', 'title', 'image', 'views', 'slug', 'created_at']);
 
         view()->share(compact('page_title', 'seo_contents', 'seo_image'));
         return Inertia::render('home', compact('page_title', 'last_must_read', 'must_read', 'trending', 'most_popular'));
@@ -121,5 +121,19 @@ class SiteController extends Controller
         $seoContents = $page->seo_content;
         $seoImage    = @$seoContents->image ? getImage(getFilePath('seo') . '/' . @$seoContents->image, getFileSize('seo')) : null;
         return view('Template::pages', compact('pageTitle', 'sections', 'seoContents', 'seoImage'));
+    }
+
+    public function search(Request $request)
+    {
+        if (!$request->search) {
+            return back();
+        }
+        $search_input = $request->search;
+        $search_items = Inertia::scroll(fn () => $this->post_query(orderBy: 'desc')->with('admin', 'category')->searchable(['tags', 'short_description', 'title', 'category:name'])->paginate(6));
+        $latest_posts  = $this->post_query(orderBy: 'desc')->with('admin')->take(3)->get(['id', 'title', 'image', 'slug', 'views', 'created_at', 'admin_id']);
+        
+        $page_title = "Search result for $request->search";
+        return Inertia::render('post/search', compact('page_title', 'search_items', 'search_input', 'latest_posts'));
+
     }
 }

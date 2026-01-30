@@ -1,9 +1,21 @@
 <script>
-    import { site_logo, site_favicon } from '@/js/stores/helpers.js';
-    import { inertia, page } from '@inertiajs/svelte';
+    import { site_logo, site_favicon, menu_active } from '@/js/stores/helpers.js';
+    import { inertia, page, useForm } from '@inertiajs/svelte';
     import { DateTime as dt } from 'luxon';
 
     $: categories = $page.props.categories;
+      
+    $: form = useForm({
+        search: '',
+    })
+
+    function submit(e) {
+        e.preventDefault()
+        $form.get( route('search'), {
+            preserveScroll: false,
+            preserveState: false,
+        })
+    }
 
 </script>
 
@@ -78,12 +90,12 @@
                 <!-- Collapse Button -->
                 <div class="md:hidden">
                     <div class="flex items-center gap-3.5">
-                        <a href="" aria-label="">
+                        <button command="show-modal" commandfor="dialog" type="button" aria-label="">
                             <svg class="size-4.5 text-black dark:text-white fill-none stroke-current stroke-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M17 17L21 21" />
                                 <path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" />
                             </svg>
-                        </a>
+                        </button>
                         <button type="button" class="hs-dark-mode hs-dark-mode-active:hidden relative flex justify-center items-center size-7 text-black rounded-full hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-theme-click-value="dark">
                             <span class="sr-only">Dark</span>
                             <svg class="shrink-0 size-4.5 fill-none stroke-current stroke-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
@@ -109,23 +121,23 @@
                 <div class="overflow-hidden overflow-y-auto max-h-[75vh] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
                     <div class="py-2 md:py-0 flex flex-col md:flex-row md:items-center md:justify-end gap-0.5 md:gap-1">
 
-                    <a class="p-2 flex items-center text-sm font-semibold bg-gray-100 dark:bg-[#FFFFFF14] border-b-2 border-[#900068] text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-hidden focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" href="#" aria-current="page">
+                        <a href="{ route('home') }" use:inertia={{ prefetch: true }} use:menu_active={'home'} class="p-2 flex items-center text-sm font-semibold  text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-hidden focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"  aria-current="page">
                             <svg class="shrink-0 size-4 me-3 md:me-2 block md:hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                             Home
                         </a>
 
                         <!-- Dropdown -->
                         <div class="hs-dropdown [--strategy:static] md:[--strategy:fixed] [--adaptive:none] md:[--adaptive:adaptive] [--is-collapse:true] md:[--is-collapse:false] ">
-                            <button id="hs-header-classic-dropdown" type="button" class="hs-dropdown-toggle w-full p-2 flex items-center text-sm font-semibold text-gray-800 hover:text-gray-500 focus:outline-hidden focus:text-gray-500 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                            <button id="hs-header-classic-dropdown" type="button"  use:menu_active={['category.details']} class="hs-dropdown-toggle w-full p-2 flex items-center text-sm font-semibold text-gray-800 hover:text-gray-500 rounded-lg focus:outline-hidden focus:text-gray-500 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                                 <svg class="shrink-0 size-4 me-3 md:me-2 block md:hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 2.5-2.5L3 5"/><path d="m3 19 2.5-2.5L3 14"/><path d="M10 6h11"/><path d="M10 12h11"/><path d="M10 18h11"/></svg>
                                 Blog
                                 <svg class="hs-dropdown-open:-rotate-180 md:hs-dropdown-open:rotate-0 duration-300 shrink-0 size-4 ms-auto md:ms-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                             </button>
 
-                            <div class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] md:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 relative w-full md:w-52 hidden z-10 top-full ps-7 md:ps-0 md:bg-white md:rounded-lg md:shadow-md before:absolute before:-top-4 before:start-0 before:w-full before:h-5 md:after:hidden after:absolute after:top-1 after:start-4.5 after:w-0.5 after:h-[calc(100%-4px)] after:bg-gray-100 dark:bg-transparent dark:md:bg-black dark:after:bg-neutral-700" role="menu" aria-orientation="vertical" aria-labelledby="hs-header-classic-dropdown">
+                            <div class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] md:duration-150 hs-dropdown-open:opacity-100 opacity-0 relative w-full md:w-52 hidden z-10 top-full ps-7 md:ps-0 md:bg-white md:rounded-lg md:shadow-md before:absolute before:-top-4 before:start-0 before:w-full before:h-5 md:after:hidden after:absolute after:top-1 after:start-4.5 after:w-0.5 after:h-[calc(100%-4px)] after:bg-gray-100 dark:bg-transparent dark:md:bg-black dark:after:bg-neutral-700" role="menu" aria-orientation="vertical" aria-labelledby="hs-header-classic-dropdown">
                                 <div class="py-1 md:px-1 space-y-0.5">
                                     {#each categories as category}
-                                        <a href="{ route('category.details', category.slug) }" use:inertia class="py-1.5 px-2 flex items-center text-sm font-semibold text-gray-800 hover:text-gray-500 focus:outline-hidden focus:text-gray-500 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500">
+                                        <a href="{ route('category.details', category.slug) }" use:inertia={{ prefetch: true }} class="py-1.5 px-2 flex items-center text-sm font-semibold text-gray-800 hover:text-gray-500 focus:outline-hidden focus:text-gray-500 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500">
                                             { category.name }
                                         </a>
                                     {/each}
@@ -150,17 +162,17 @@
                         <!-- Button Group -->
                         <div class="relative flex-wrap items-center gap-x-3.5 md:ps-2.5 mt-1 md:mt-0 md:ms-1.5 before:block before:absolute before:top-1/2 before:-start-px before:w-px before:h-4 before:bg-gray-300 before:-translate-y-1/2 dark:before:bg-neutral-700 hidden md:flex">
                             
-                                <a href="" aria-label="">
-                                    <svg class="size-4.5 text-black dark:text-white fill-none stroke-current stroke-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                <button command="show-modal" commandfor="dialog" type="button" aria-label="">
+                                    <svg class="size-4.5 text-black dark:text-white fill-none stroke-current stroke-3 cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M17 17L21 21" />
                                         <path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" />
                                     </svg>
-                                </a>
-                                <button type="button" class="hs-dark-mode hs-dark-mode-active:hidden relative flex justify-center items-center size-7 text-black rounded-full hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-theme-click-value="dark">
+                                </button>
+                                <button type="button" class="hs-dark-mode hs-dark-mode-active:hidden cursor-pointer relative flex justify-center items-center size-7 text-black rounded-full hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-theme-click-value="dark">
                                     <span class="sr-only">Dark</span>
                                     <svg class="shrink-0 size-4.5 fill-none stroke-current stroke-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
                                 </button>
-                                <button type="button" class="hs-dark-mode hs-dark-mode-active:flex hidden relative flex justify-center items-center size-7 text-black rounded-full hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-theme-click-value="light">
+                                <button type="button" class="hs-dark-mode hs-dark-mode-active:flex hidden cursor-pointer relative flex justify-center items-center size-7 text-black rounded-full hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-theme-click-value="light">
                                     <span class="sr-only">Light</span>
                                     <svg class="shrink-0 size-4.5 fill-none stroke-current stroke-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
                                 </button>
@@ -175,3 +187,38 @@
     </div>
 </header>
 <!-- ========== END HEADER ========== -->
+
+
+
+
+
+
+
+
+
+
+
+<el-dialog>
+    <dialog id="dialog" aria-labelledby="dialog-title" class="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent">
+        <el-dialog-backdrop class="fixed inset-0 bg-black/90 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"></el-dialog-backdrop>
+
+        <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+        <div tabindex="0" class="flex min-h-full items-center justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
+            <el-dialog-panel class="relative transform overflow-hidden text-left shadow-xl outline -outline-offset-1 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95">
+                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="items-start">
+                        <div class="mt-3 sm:mt-0 sm:text-left">
+                            <div class="mt-2">
+                                <form onsubmit={submit}>
+                                    <!-- svelte-ignore a11y_autofocus -->
+                                    <input type="search" bind:value="{ $form.search }" autofocus class="peer ps-0 py-2.5 sm:py-3 block w-full bg-transparent border-t-transparent border-b-2 border-white/10 border-x-transparent border-b-line-2 text-white font-bold placeholder:font-bold placeholder:text-white text-4xl sm:text-6xl text-foreground placeholder:text-muted-foreground-1 focus:border-t-transparent focus:border-x-transparent focus:border-b-primary-focus focus:ring-0" placeholder="Search...">
+                                </form>
+                                <p class="text-sm text-[#777] mt-6">Type above and press Enter to search. Press Esc to cancel.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </el-dialog-panel>
+        </div>
+    </dialog>
+</el-dialog>

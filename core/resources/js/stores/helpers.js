@@ -65,6 +65,32 @@ export function get_image(image, key = null) {
     return `/${image.replace(/^\/+/, '')}`;
 }
 
+export function menu_active(node, routeNames) {
+    const currentRoute = route().current(); // Get the current route name
+    const routes = Array.isArray(routeNames) ? routeNames : [routeNames];
+
+    // Check if the current route is in the provided routes list
+    if (routes.includes(currentRoute)) {
+        // Add bg-gray-100 to both button and the active links inside the dropdown
+        const parentButton = node.closest('.hs-dropdown-toggle');
+        if (parentButton) {
+            parentButton.classList.add('dark:bg-[#FFFFFF14]');
+        }
+        node.classList.add('bg-gray-100', 'dark:bg-[#FFFFFF14]', 'border-b-2', 'border-[#900068]');
+    }
+
+    // Cleanup when the component is destroyed or the route changes
+    return {
+        destroy() {
+            const parentButton = node.closest('.hs-dropdown-toggle');
+            if (parentButton) {
+                parentButton.classList.remove('dark:bg-[#FFFFFF14]');
+            }
+            node.classList.remove('bg-gray-100', 'dark:bg-[#FFFFFF14]', 'border-b-2', 'border-[#900068]');
+        }
+    };
+}
+
 export function search_url(currentUrl) {
     const url = new URL(currentUrl, window.location.origin);
     url.searchParams.delete('page'); // Remove page parameter when searching
