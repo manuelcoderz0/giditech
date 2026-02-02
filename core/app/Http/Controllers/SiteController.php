@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Page;
 use App\Models\Post;
+use App\Models\Subscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class SiteController extends Controller
@@ -135,5 +137,23 @@ class SiteController extends Controller
         $page_title = "Search result for $request->search";
         return Inertia::render('post/search', compact('page_title', 'search_items', 'search_input', 'latest_posts'));
 
+    }
+
+    public function subscribe(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|max:255|unique:subscribers,email'
+        ]);
+
+        if (!$validator->passes()) {
+            return response()->json(['error' => $validator->errors()->all()]);
+        }
+
+        $subscriber = new Subscriber();
+        $subscriber->email = $request->email;
+        $subscriber->save();
+
+        $notify[] = ['success', 'Thank you, we will notify you on our latest news'];
+        return back()->withNotify($notify);
     }
 }

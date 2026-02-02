@@ -1,6 +1,7 @@
 <?php
 
 use App\Lib\FileManager;
+use App\Models\Frontend;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -19,6 +20,25 @@ function file_uploader($file, $location, $size = null, $old = null, $thumb = nul
     $fileManager->filename = $filename;
     $fileManager->upload();
     return $fileManager->filename;
+}
+
+function get_content($dataKeys, $singleQuery = false, $limit = null, $orderById = false) {
+
+
+    if ($singleQuery) {
+        $content = Frontend::where('data_keys', $dataKeys)->orderBy('id', 'desc')->first();
+    } else {
+        $article = Frontend::query();
+        $article->when($limit != null, function ($q) use ($limit) {
+            return $q->limit($limit);
+        });
+        if ($orderById) {
+            $content = $article->where('data_keys', $dataKeys)->orderBy('id')->get();
+        } else {
+            $content = $article->where('data_keys', $dataKeys)->orderBy('id', 'desc')->get();
+        }
+    }
+    return $content;
 }
 
 function get_file_path($key)

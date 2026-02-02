@@ -6,6 +6,7 @@ use App\Constants\Status;
 use App\Lib\Searchable;
 use App\Models\AdminNotification;
 use App\Models\Frontend;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;

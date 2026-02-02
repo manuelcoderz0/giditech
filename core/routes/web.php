@@ -11,5 +11,5 @@ Route::controller('SiteController')->group(function () {
     Route::get('placeholder-image/{size}', 'placeholder_image')->name('placeholder.image');
     //Route::get('/{slug}', 'pages')->name('pages');
     Route::get('/contact', 'contact')->name('contact');
-    Route::post('/contact', 'contactSubmit');
+    Route::post('subscribe', 'subscribe')->name('subscribe');
 });

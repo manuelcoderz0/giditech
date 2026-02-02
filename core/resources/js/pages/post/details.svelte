@@ -2,6 +2,7 @@
     import layout  from '@/js/pages/layouts/app.svelte';
     import { inertia, page } from '@inertiajs/svelte';
     import { DateTime as dt } from 'luxon';
+import DisqusComment from 'svelte-disqus-component/src/DisqusComment.svelte';
     import { get_image, get_file_path, get_file_size, str_limit } from '@/js/stores/helpers.js';
 
     $: page_title = $page.props.page_title;
@@ -10,6 +11,7 @@
     $: trending_posts = $page.props.trending_posts;
 
     const encode = encodeURIComponent;
+    const shortName = 'giditech-1'
 </script>
 
 <style>
@@ -145,6 +147,11 @@
                 <div>
                     <div class="my-10 border-y border-[#e8e8e8] dark:border-[#FFFFFF21] bg-[#fbfbfb] dark:bg-[#070707] px-3.5 py-2.5">
                         <h4 class="text-[#161616] dark:text-white text-[14px] font-bold uppercase">Comments <span class="text-[#900068]"></span></h4>
+                    </div>
+
+                    <div>
+                        <svelte:component this={ DisqusComment } {shortName} $page.url identifier={post.id} {page_title}></svelte:component>
+
                     </div>
                 </div>
             </div> 

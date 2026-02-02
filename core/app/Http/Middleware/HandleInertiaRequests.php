@@ -47,6 +47,8 @@ class HandleInertiaRequests extends Middleware
                 'site_key' => config('services.turnstile.site_key'),
             ],
 
+            'policies' => @get_content('policy_pages.element', orderById:true),
+
             'auth.admin' => fn() => Auth::guard('admin')->user()?->only('id','username','email','image'),
 
             'session' => function () {
